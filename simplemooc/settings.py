@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'simplemooc.core', # path da aplicação (movendo o app para pasta simplemooc, pode ser referenciada dessa maneira)
+    'simplemooc.courses',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media') # os arquivos relacionados a modelo, serão salvos nesse diretório
