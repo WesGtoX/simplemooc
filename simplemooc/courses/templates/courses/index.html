@@ -11,14 +11,14 @@
         </div>
     </div>
 </div>
-{% for course in courses %}     {# for para cada curso dentro da variavel 'courses', joga dentro de course #}
+{% for course in courses %}     {# for para cada curso dentro da variavel 'courses', joga dentro de course. #}
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1-3">
         <div class="l-box">
             <a href="">
             {% if course.image %}      {# se houver alguma imagem... #}
                 <img src="{{ course.image.url }}" alt="{{ course.name }}"/>
-            {% else %}      {# caso não for verdadeiro #}
+            {% else %}      {# caso não for verdadeiro. #}
                 <img src="{% static 'img/course-image.png' %}" alt="{{ course.name }}"/>
             {% endif %}
             </a>
@@ -27,11 +27,11 @@
     <div class="pure-u-2-3">
         <div class="l-box">
             <h4 class="content-subhead"><a href="" title="">{{ course.name }}</a></h4>
-            {{ course.description|linebreaks }}     {# mostra a descrição dos cursos, busca no banco de dados, 'linebreaks é uma filtro do Django #}
+            {{ course.description|linebreaks }}     {# mostra a descrição dos cursos, busca no banco de dados, 'linebreaks é uma filtro do Django. #}
         </div>
     </div>
 </div>
-{% empty %}     {# opção do for que mostra o que está definido quando não houver nenhum valor #}
+{% empty %}     {# opção do for que mostra o que está definido quando não houver nenhum valor. #}
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1">
         <div class="l-box">

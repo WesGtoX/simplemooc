@@ -14,6 +14,6 @@ if settings.DEBUG:		# se estiver em debug...
 																					# que depois vai gerar uma view, que recebe uma url que vai pegar o diretorio base, e conforme o resto...
 																					# da url que foi retornado, ele vai buscar o caminho do arquivo.
 																					# MEDIA_ROOT será o diretório base para todos os arquivos de media de todos os Models...
-																					# O upload_to é o sufixo, assim o caminho final será o MEDIA_ROOT + upload_to
-# ^ - começo de uma string
-# $ - final de uma string
+																					# O upload_to é o sufixo, assim o caminho final será o MEDIA_ROOT + upload_to.
+# ^ - começo de uma string.
+# $ - final de uma string.
