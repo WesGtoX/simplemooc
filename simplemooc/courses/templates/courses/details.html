@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="splash">
+    <div class="pure-g-r">
+        <div class="pure-u-1">
+            <div class="l-box splash-text">
+                <h1 class="splash-head">
+                    Uma Simples Plataforma de Ensino a Distância
+                </h1>
+                <h2 class="splash-subhead">
+                    O Simple MOOC visa simplificar o ensino a distância, provendo ferramentas objetivas e de fácil uso para cursos a distância.
+                </h2>
+                <p>
+                    <a href="#" class="pure-button primary-button">Inscreva-se</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-2-3">
+        <div class="l-box">
+            <h4 class="content-subhead">Sobre o Curso</h4>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+        </div>
+    </div>
+    <div class="pure-u-1-3">
+        <div class="l-box">
+            <img src="img/course-image.png" alt="" />
+        </div>
+        <h4>Dúvidas?</h4>
+        <p>
+            <a href="#contato" title="" class="pure-button">Fale Conosco</a>
+        </p>
+    </div>
+</div>
+<div class="pure-g-r content-ribbon" id="contato">
+    <div class="pure-u-1">
+        <h3>Tire sua dúvida sobre o Curso</h3>
+        <form class="pure-form pure-form-aligned">
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="name">Nome</label>
+                    <input id="name" type="text" />
+                    <ul class="errorlist">
+                        <li>Este campo é obrigatório</li>
+                    </ul>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="name">E-mail</label>
+                    <input id="name" type="text" />
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="password">Mensagem/Dúvida</label>
+                    <textarea cols="40" rows="4"></textarea>
+                </div>
+
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Enviar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

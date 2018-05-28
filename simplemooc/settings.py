@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'simplemooc.core', # path da aplicação (movendo o app para pasta simplemooc, pode ser referenciada dessa maneira)
+    'simplemooc.core',      # path da aplicação (movendo o app para pasta simplemooc, pode ser referenciada dessa maneira)
     'simplemooc.courses',
 ]
 
@@ -125,4 +125,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media') # os arquivos relacionados a modelo, serão salvos nesse diretório
+MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')      # os arquivos relacionados a modelo, serão salvos nesse diretório
+MEDIA_URL = '/media/'    # seria a url base para os arquivos staticos que são feitos uploads pelo usuário
