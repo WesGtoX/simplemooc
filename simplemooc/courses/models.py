@@ -33,6 +33,14 @@ class Course(models.Model):
 	def __str__(self):		# mostra os nomes dos cursos na página 'admin'.
 		return self.name
 
+	@models.permalink	# pega a tupla e usa uma função chamada reverse que está no pacote: "from django.core.urlresolvers import reverse", é uma forma de resgatar a url dado um nome. E com isso ele retonar a url.
+	def get_absolute_url(self):		# metodo que retorna uma tupla
+		
+		return ('courses:details',(), {'slug': self.slug})
+				# 1º parâmetro: url
+				# 2º parâmetro: argumentos não nomeaveis (não estamos utilizando)
+				# 3º parâmetro: argumentos nomeaveis que é um dicionário (estamos utilizando)
+
 	class Meta:		# uma versão mais bonita de falar essa classe.
 		verbose_name = 'Curso'
 		verbose_name_plural = 'Cursos'
