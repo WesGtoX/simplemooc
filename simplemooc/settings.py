@@ -34,13 +34,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth',  # aplicação 'auth' que vem por padrão.
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'simplemooc.core',      # path da aplicação (movendo o app para pasta simplemooc, pode ser referenciada dessa maneira)
+    # path da aplicação (movendo o app para pasta simplemooc, pode ser referenciada dessa maneira).
+    'simplemooc.core',
+    'simplemooc.accounts',
     'simplemooc.courses',
 ]
 
@@ -139,3 +140,8 @@ EMAIL_HOST_PASSWORD = 'senha'
 EMAIL_PORT = 587
 
 CONTACT_EMAIL = 'contato@simplemooc.com'
+
+# Auth - redireciona para uma determinada url definida quando efetua o login
+LOGIN_URL = 'accounts:login'    # pode ser definida manualmente, ou usar o 'accounts' já utilizado no template
+LOGIN_REDIRECT_URL = 'core:home'    # redireciona para a home
+LOGOUT_URL = 'accounts:logout'  # url de logout

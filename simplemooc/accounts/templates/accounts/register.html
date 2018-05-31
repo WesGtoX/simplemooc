@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <h2>Informe seus dados</h2>
+        <form class="pure-form pure-form-stacked" method="post">
+            {% csrf_token %}
+            <fieldset>
+                {{ form.non_field_erros }}      {# que são erros gerais, que não estão ligadas necessariamente a um campo, pode ser mais de um campo. #}
+
+                {% for field in form %}     {# para cada campo no formulário (o form é da view do Django). #}
+                <div class="pure-control-group">
+                    {{ field.label_tag }}   {# view do Django. #}
+                    {{ field }}             {# view do Django. #}
+                    {{ field.errors }}      {# view do Django. #}
+                </div>
+                {% endfor %}
+
+                <div class="pure-controls">
+                    <button type="submit" class="pure-button pure-button-primary">Cadastrar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

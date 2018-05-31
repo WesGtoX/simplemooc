@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <ul class="breadcrumb">
+            <li><a href="#">Meu Painel</a></li>
+            <li>/</li>
+            <li><a href="#">Editar Conta</a></li>
+        </ul>
+    </div>
+    <div class="pure-u-1-3">
+        <div class="pure-menu pure-menu-open">
+            <a class="pure-menu-heading">Meus Cursos</a>
+            <ul>
+                <li><a href="#">Curso 1</a></li>
+                <li><a href="#">Curso 2</a></li>
+                <li class="pure-menu-heading">Minha Conta</li>
+                <li><a href="#">Editar Conta</a></li>
+                <li><a href="#">Editar Senha</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="pure-u-2-3">
+        <div class="inner">
+            <p><strong>Usuário</strong>: {{ user }}</p>
+            <p><strong>E-mail</strong>: {{ user.email }}</p>
+        </div>
+    </div>
+</div>
+{% endblock  %}
