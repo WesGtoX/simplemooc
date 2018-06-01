@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 class RegisterForm(UserCreationForm):
+	
 	email = forms.EmailField(label='E-mail')
 
 	def clean_email(self):		# serve tanto para uma verificação extra, quanto para fazer uma modificação no valor, se quisesse extrair alguma parte do e-mail, poderia ser adaptado.
@@ -19,7 +20,16 @@ class RegisterForm(UserCreationForm):
 			user.save()
 		return user		# o padrão de 'ModelForm' é sempre o save retornar a instancia do objeto relacionado.
 
+class EditAccountForm(forms.ModelForm):
+	
+	def clean_email(self):
+		email = self.cleaned_data['email']
+		queryset = User.objects.filter(
+			email=email).exclude(pk=self.instance.pk)
+		if queryset.exists():
+			raise forms.ValidationError('Já existe usuário com este E-mail')
+		return email
 
-
-
-
+	class Meta:
+		model = User 	# para saber qual model que o formulário vai precisar...
+		fields = ['username', 'email', 'first_name', 'last_name']	# são campos que o model do Django nos dá.

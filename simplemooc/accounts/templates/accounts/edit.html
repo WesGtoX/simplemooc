@@ -1,0 +1,29 @@
+{% extends "accounts/dashboard.html" %}
+
+{% block breadcrumb %}	{# chama o bloco da herança #}
+	{{ block.super }}	{# a variavel 'block' é o bloco que está utilizando a tag 'breadcrumb', ele tem um atributo chamado 'super', que chama o conteúdo que estava nele por padrão. #}
+	<li>/</li>
+	<li><a href="{% url 'accounts:edit' %}">Editar Conta</a></li>
+{% endblock %}
+
+{% block dashboard_content %}
+<form class="pure-form pure-form-stacked" method='POST'>
+	{% csrf_token %}
+	{% if success %}
+	<p>Os dados foram alterados com sucesso</p>
+	{% endif %}
+    <fieldset>
+    	{{ form.non_field_errors }}
+    	{% for field in form %}
+        <div class="pure-control-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+        <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-primary">Salvar Modificações</button>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}
