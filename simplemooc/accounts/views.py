@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
-from .forms import RegisterForm, EditAccountForm
+from simplemooc.core.utils import generate_hash_key
 
-@login_required		# essa função é chamada passando como primeiro parametro, a função que vai ser executada, virifica se o usuário está logado, se estiver ok, se não estiver ele faz um redirect para a página de login, colocando um parêmetro na url o 'next'.
+from .forms import RegisterForm, EditAccountForm, PasswordResetForm
+from .models import PasswordReset
+
+User = get_user_model()
+
+@login_required		# essa função é chamada passando como primeiro parametro, a função que vai ser executada, verifica se o usuário está logado, se estiver ok, se não estiver ele faz um redirect para a página de login, colocando um parêmetro na url o 'next'.
 def dashboard(request):
 	template_name = 'accounts/dashboard.html'
 	return render(request, template_name)
@@ -27,6 +32,20 @@ def register(request):
 	context = {
 		'form': form
 	}
+	return render(request, template_name, context)
+
+def password_reset(request):
+	template_name = 'accounts/password_reset.html'
+	context = {}
+	form = PasswordResetForm(request.POST or None)		# forma mais pratica para que os dados não sejam validados, quando for 'POST' de fato ele vai validar os dados, e quando não for, não vai ser validado.
+	print(request.POST)
+	if form.is_valid():
+		user = User.objects.get(email=form.cleaned_data['email'])		# quando for válido, eu busco o usuário com aquele e-mail
+		key = generate_hash_key(user.username)		# gera a chave.
+		reset = PasswordReset(key=key, user=user)	# cria o model para resetar a senha.
+		reset.save()
+		context['success'] = True	# exibe a mensagem de erro.
+	context['form'] = form
 	return render(request, template_name, context)
 
 @login_required

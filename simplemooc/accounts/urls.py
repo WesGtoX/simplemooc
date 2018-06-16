@@ -10,6 +10,7 @@ urlpatterns = [
 	path('sair/', auth_views.logout, 
 		{'next_page': 'core:home'},	name='logout'),# vai ser redirecionado para a view 'home', da app core
 	path('cadastre-se/', views.register, name='register'),
+	path('nova-senha/', views.password_reset, name='password_reset'),
 	path('editar/', views.edit, name='edit'),
 	path('editar-senha/', views.edit_password, name='edit_password'),
 ]

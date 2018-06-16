@@ -142,6 +142,7 @@ EMAIL_PORT = 587
 CONTACT_EMAIL = 'contato@simplemooc.com'
 
 # Auth - redireciona para uma determinada url definida quando efetua o login
-LOGIN_URL = 'accounts:login'    # pode ser definida manualmente, ou usar o 'accounts' já utilizado no template
+LOGIN_URL = 'accounts:login'        # pode ser definida manualmente, ou usar o 'accounts' já utilizado no template
 LOGIN_REDIRECT_URL = 'core:home'    # redireciona para a home
-LOGOUT_URL = 'accounts:logout'  # url de logout
+LOGOUT_URL = 'accounts:logout'      # url de logout
+AUTH_USER_MODEL = 'accounts.User'   # setar o nome da 'app'.'model', com isso o Django vai saber que o usuário do sistema é o nosso model e não o padrão do Django.

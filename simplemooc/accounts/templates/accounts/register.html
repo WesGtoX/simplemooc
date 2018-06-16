@@ -7,7 +7,7 @@
         <form class="pure-form pure-form-stacked" method="post">
             {% csrf_token %}
             <fieldset>
-                {{ form.non_field_erros }}      {# que são erros gerais, que não estão ligadas necessariamente a um campo, pode ser mais de um campo. #}
+                {{ form.non_field_errors }}      {# que são erros gerais, que não estão ligadas necessariamente a um campo, pode ser mais de um campo. #}
 
                 {% for field in form %}     {# para cada campo no formulário (o form é da view do Django). #}
                 <div class="pure-control-group">
