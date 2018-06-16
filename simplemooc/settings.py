@@ -133,11 +133,11 @@ MEDIA_URL = '/media/'    # seria a url base para os arquivos staticos que são f
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # settings padrão (pode ser retirada)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'Nome <email@gmail.com>'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'email@gmail.com'
-EMAIL_HOST_PASSWORD = 'senha'
-EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_HOST_USER = 'email@gmail.com'
+#EMAIL_HOST_PASSWORD = 'senha'
+#EMAIL_PORT = 587
 
 CONTACT_EMAIL = 'contato@simplemooc.com'
 

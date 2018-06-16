@@ -9,7 +9,7 @@ def send_mail_template(
 	context,	# o contexto que vai server para esse template.
 	recipient_list,		# a lista de usuários que vão receber essa mensagem.
 	from_email=settings.DEFAULT_FROM_EMAIL,		# por padrão aquele default from e-mail.
-	fail_silently=False		# falha silenciosa que é uma variável qeu precisa no emai.send para saber quando o envio de e-mail falhar, ele vai lançar ou não essa ação.
+	fail_silently=False		# falha silenciosa que é uma variável qeu precisa no email.send para saber quando o envio de e-mail falhar, ele vai lançar ou não essa ação.
 ):
 
 	message_html = render_to_string(template_name, context)		# vai ser a renderizaçãodo template no contexto que foi mandado.
