@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
-from .models import Course
+from .models import Course, Enrollment
 from .forms import ContactCourse
 
 def index(request):
@@ -35,3 +36,13 @@ def details(request,slug):
 	context['course'] = course
 	template_name = 'courses/details.html'
 	return render(request, template_name, context)
+
+@login_required		# decorator para obrigar o usuário a estar logado.
+def enrollment(request, slug):
+	course = get_object_or_404(Course, slug=slug)	# pega o curso atual
+	enrollment, created = Enrollment.objects.get_or_create(		# esse metodo vai ser passado um filtro, 'qual vai ser o user do request'. Ele retorna uma tupla, a inscrição se ouver, caso não, será criado, e um boleano dizendo se criou ou não.
+		user=request.user, course=course 		# essa inscrição será do usuário atual, que está logado no sistema, e vai ter o curso em questão.
+	)
+	#if created:
+	#	enrollment.active()
+	return redirect('accounts:dashboard')

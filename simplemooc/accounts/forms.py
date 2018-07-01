@@ -15,7 +15,7 @@ class PasswordResetForm(forms.Form):		# não vai ser um 'ModelForm' porque ele v
 
 	def clean_email(self):		# para validar se o email é de algum usuário do sistema.
 		email = self.cleaned_data['email']
-		if User.objects.filter(email=email).exists():		# retorna um boleano.
+		if User.objects.filter(email=email).exists():		# detectar se existem algum usuário do sistema, retorna um boleano.
 			return email	# todo 'clean_...' retorna o valor que o formulátio vai pegar no final.
 		raise forms.ValidationError(
 			'Nenhum usuário encontrado com este e-mail'
@@ -27,11 +27,11 @@ class PasswordResetForm(forms.Form):		# não vai ser um 'ModelForm' porque ele v
 		reset = PasswordReset(key=key, user=user)	# cria o model para resetar a senha.
 		reset.save()
 		template_name = 'accounts/password_reset_mail.html'
-		subject = 'Criar nova Senha no Simple MOOC'
+		subject = 'Criar nova Senha no Simple MOOC'		# assunto.
 		context = {
 		'reset': reset,
 		}
-		send_mail_template(subject, template_name, context, [user.email])
+		send_mail_template(subject, template_name, context, [user.email])		# função criada de envio de email no 'core'
 
 class RegisterForm(forms.ModelForm):
 	

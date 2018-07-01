@@ -23,7 +23,7 @@ def register(request):
 		if form.is_valid():
 			user = form.save()		# ...e salvar o usuário. # 'form.save()' vai retornar o usuário.
 			user = authenticate(
-				username=user.username, password=form.cleaned_data['password1']	# a senha não está em 'user.password', 'user.password' é uma senha criptografada, que é a senha que vai para o banco de dados.
+				username=user.username, password=form.cleaned_data['password1']		# a senha não está em 'user.password', 'user.password' é uma senha criptografada, que é a senha que vai para o banco de dados.
 			)
 			login(request, user)	# é responsável por logar de fato o usuário, coloca o usuário na sessão.
 			return redirect('core:home')	# depois faz o redirect para a 'home'.
