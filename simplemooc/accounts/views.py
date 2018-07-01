@@ -3,6 +3,7 @@ from django.contrib.auth.forms import (UserCreationForm, PasswordChangeForm, Set
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.contrib import messages
 
 from simplemooc.core.utils import generate_hash_key
 
@@ -64,8 +65,10 @@ def edit(request):
 		form = EditAccountForm(request.POST, instance=request.user)		# se for 'POST' chama o 'EditAccountForm', passando o 'POST' que são os dados. 'instance' é a instancia que está sendo alterada, o model, que é o 'request.user', usuário atual da sessão.
 		if form.is_valid():		# se o form estiver válido...
 			form.save()		# ...ele salva.
-			form = EditAccountForm(instance=request.user)	# cria novamente um usuário vazio.
-			context['success'] = True	# e faz uma variável de 'sucesso', para apenas no template jogar um if e jogar uma mensagem lá.
+			messages.success(request,'Os dados da sua conta foram alterados com sucesso')
+			return redirect('accounts:dashboard')
+			#form = EditAccountForm(instance=request.user)	# cria novamente um usuário vazio.
+			#context['success'] = True	# e faz uma variável de 'sucesso', para apenas no template jogar um if e jogar uma mensagem lá.
 	else:	# se não for 'POST'...
 		form = EditAccountForm(instance=request.user)	# ...é apenas um formulário vazio.
 	context['form'] = form 	# renderiza apenas o template com esse formulário

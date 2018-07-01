@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Course, Enrollment
 from .forms import ContactCourse
@@ -43,6 +44,9 @@ def enrollment(request, slug):
 	enrollment, created = Enrollment.objects.get_or_create(		# esse metodo vai ser passado um filtro, 'qual vai ser o user do request'. Ele retorna uma tupla, a inscrição se ouver, caso não, será criado, e um boleano dizendo se criou ou não.
 		user=request.user, course=course 		# essa inscrição será do usuário atual, que está logado no sistema, e vai ter o curso em questão.
 	)
-	#if created:
+	if created:
 	#	enrollment.active()
+		messages.success(request, 'Você foi inscrito no curso com sucesso')	# função do modo messages que já está disponível
+	else:
+		messages.info(request, 'Você já está inscrito no curso')
 	return redirect('accounts:dashboard')
