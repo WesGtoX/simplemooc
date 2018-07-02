@@ -10,10 +10,10 @@
 <form class="pure-form pure-form-stacked" method='POST'>
 	{% csrf_token %}
     
-{#	{% if success %}
-	<p>Os dados foram alterados com sucesso</p>
-	{% endif %} #}
-    <fieldset>
+{#	{% if success %} #}
+{#	<p>Os dados foram alterados com sucesso</p> #}
+{#	{% endif %} #}
+{#    <fieldset> #}
     	{{ form.non_field_errors }}
     	{% for field in form %}
         <div class="pure-control-group">

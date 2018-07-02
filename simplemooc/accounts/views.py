@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib import messages
 
 from simplemooc.core.utils import generate_hash_key
+from simplemooc.courses.models import Enrollment
 
 from .forms import RegisterForm, EditAccountForm, PasswordResetForm
 from .models import PasswordReset
@@ -15,7 +16,8 @@ User = get_user_model()
 @login_required		# essa função é chamada passando como primeiro parametro, a função que vai ser executada, verifica se o usuário está logado, se estiver ok, se não estiver ele faz um redirect para a página de login, colocando um parêmetro na url o 'next'.
 def dashboard(request):
 	template_name = 'accounts/dashboard.html'
-	return render(request, template_name)
+	context = {}
+	return render(request, template_name, context)
 
 def register(request):
 	template_name = 'accounts/register.html'
