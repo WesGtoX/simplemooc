@@ -1,38 +1,23 @@
 {% extends "courses/course_dashboard.html" %}
 
 {% block dashboard_content %}
+{% for announcement in announcements %}
 <div class="well">
-    <h2>Iníco das aulas, sejam bem vindos</h2>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+    <h2>{{ announcement.title }}</h2>
+    {{ announcement.content|linebreaks }}
     <p>
         <a href="#comments" title="">
         <i class="fa fa-comments-o"></i>
-        10 Comentários
+        {% with comments_count=announcement.comments.count %}   {# armazena uma variável mais complexa em uma mais simples, para evitar sua repetoção, a variável criada fica disponível apenas dentro desse 'with'. #}
+        {{ comments_count }}       {# mostra apenas a contagem de comentários. #}
+        Comentário{{ comments_count|pluralize}}        {# template tag 'pluralize', se for 0 ou mais de 1 ele vai jogar um 's' se for 1 ele mantem intácto por padrão. #}
+        {% endwith %}
         </a>
     </p>
 </div>
+{% empty %}     {# quando não houver nenhum valor nesse 'for', vai renderizar o 'empty'. #}
 <div class="well">
-    <h2>Iníco das aulas, sejam bem vindos</h2>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <p>
-        <a href="#comments" title="">
-        <i class="fa fa-comments-o"></i>
-        10 Comentários
-        </a>
-    </p>
+    <h2>Nenhum anúncio criado</h2>
 </div>
+{% endfor %}
 {% endblock %}

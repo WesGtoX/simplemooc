@@ -11,7 +11,6 @@ def index(request):
 	context = {		# dicionario passado no final.
 		'courses': courses
 	}
-
 	return render(request, template_name, context)
 
 #def details(request,pk):
@@ -45,10 +44,11 @@ def enrollment(request, slug):
 		user=request.user, course=course 		# essa inscrição será do usuário atual, que está logado no sistema, e vai ter o curso em questão.
 	)
 	if created:
-	#	enrollment.active()
+		#enrollment.active()
 		messages.success(request, 'Você foi inscrito no curso com sucesso')	# função do modo messages que já está disponível
 	else:
 		messages.info(request, 'Você já está inscrito no curso')
+
 	return redirect('accounts:dashboard')
 
 @login_required
@@ -80,6 +80,7 @@ def announcements(request, slug):
 			return redirect('accounts:dashboard')
 	template = 'courses/announcements.html'
 	context = {
-		'course': course
+		'course': course,
+		'announcements':course.announcements.all()	# todos os anúncios do curso está nessa variável.
 	}
 	return render(request, template, context)

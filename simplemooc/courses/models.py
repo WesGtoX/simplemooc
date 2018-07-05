@@ -25,7 +25,7 @@ class Course(models.Model):
 	)
 
 	created_at = models.DateTimeField('Criado em', auto_now_add=True) 		# Data e hora. auto_now_add significa que toda vez que criar o curso, automaticamente será colocado essa variavel.
-	update_at = models.DateTimeField('Atualizado em', auto_now=True)		# auto_now siginifica que toda vez que ele for salvo, a variavel será alterada para a data atual.
+	updated_at = models.DateTimeField('Atualizado em', auto_now=True)		# auto_now siginifica que toda vez que ele for salvo, a variavel será alterada para a data atual.
 
 	objects = CourseManager()	# reescreve o atributo 'objects', o .objects não é mais o manager padrão do Django agora.
 
@@ -67,7 +67,7 @@ class Enrollment(models.Model):
 	)
 
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
-	update_at = models.DateTimeField('Atualizado em', auto_now=True)
+	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
 	def active(self):	# conhecido como 'FatModel', deixa o model um pouco mais gordo, mas a informação do model no model, ao invés de ficar fazendo lógica de negócio nas views, que tem que ser o mais enxuta possível.
 		self.status = 1
@@ -80,3 +80,41 @@ class Enrollment(models.Model):
 		verbose_name='Inscrição'
 		verbose_name_plural='Inscrições'
 		unique_together = (('user', 'course'),)	# essa opão é uma tupla de tupla também, para cada tupla, ele deve indicar dois ou mais campos. É para evitar repetição de inscrição.
+
+class Announcement(models.Model):
+
+	course = models.ForeignKey(
+		Course,
+		on_delete = models.CASCADE,
+		verbose_name='Curso',
+		related_name='announcements'		# dentro do curso vai ter um atributo chamado 'announcements' que vai estar os anúncios relacionados a ele.
+	)
+	title = models.CharField('Título', max_length=100)
+	content = models.TextField('Conteúdo')
+
+	created_at = models.DateTimeField('Criado em', auto_now_add=True)
+	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+	def __str__(self):
+		return self.title
+
+	class Meta:
+		verbose_name = 'Anúncio'
+		verbose_name_plural = 'Anúncios'
+		ordering = ['-created_at']	# ordena a listagem de curso decrescente, sempre o mais atual sera exibido primeiro.
+
+class Comment(models.Model):
+
+	announcement = models.ForeignKey(
+		Announcement, verbose_name='Anúncio', related_name='comments', on_delete = models.CASCADE,	# uma determinada instancia de anúncio vai ter uma ação chamada 'comments' que irá trazer os seus comentários.
+	)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='usuário', on_delete = models.CASCADE)		# usuário que comentou.	
+	comment = models.TextField('Comentário')
+
+	created_at = models.DateTimeField('Criado em', auto_now_add=True)
+	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+	class Meta:
+		verbose_name = 'Comentário'
+		verbose_name_plural = 'Comentários'
+		ordering = ['created_at']	# ordenado de forma crescente.
