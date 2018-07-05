@@ -3,6 +3,7 @@
 {% load courses_tags %}     {# carrega as tags presentes em 'courses_tags' o Django sabe que é uma template tag porque o arquivo está dentro de uma pasta chamada 'templatetags' que é o padrão. #}
 
 {% block content %}
+{% load_my_courses user as enrollments %}
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1">
         <ul class="breadcrumb">
@@ -14,26 +15,67 @@
     <div class="pure-u-1-3">
         <div class="pure-menu pure-menu-open">
             <ul>
-                {% load_my_courses user as enrollments %}
+                <li class="pure-menu-heading">
+                    Bem-vindo, {{ user }}
+                </li>
+                {% block menu_options %} 
                 <a class="pure-menu-heading">Meus Cursos</a>
                 {% for enrollment in enrollments %}
-                <li><a href="#">{{ enrollment.course }}</a></li>
+                <li>
+                    <a href="{% url 'courses:announcements' enrollment.course.slug %}">
+                    <i class="fa fa-book"></i>
+                    {{ enrollment.course }}
+                    </a>
+                </li>
                 {% empty %}
                 <li>Nenhum curso encontrado</li>
                 {% endfor %}
-                <li class="pure-menu-heading">Minha Conta</li>
-                <li><a href="{% url 'accounts:edit' %}">Editar Conta</a></li>
-                <li><a href="{% url 'accounts:edit_password' %}">Editar Senha</a></li>
+
+                <li class="pure-menu-heading">Configurações de Conta</li>
+                <li>
+                    <a href="{% url 'accounts:edit' %}">
+                    <i class="fa fa-cog"></i>
+                        Editar Informações
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'accounts:edit_password' %}">
+                    <i class="fa fa-lock"></i>
+                        Editar Senha
+                    </a>
+                </li>
+                {% endblock %}
             </ul>
         </div>
     </div>
     <div class="pure-u-2-3">
         <div class="inner">
         	{% block dashboard_content %}
-            <p><strong>Usuário</strong>: {{ user }}</p>
-            <p><strong>E-mail</strong>: {{ user.email }}</p>
+            <h2>Meus Cursos</h2>
+            {% for enrollment in enrollments %}
+            <div class="well">
+                <h3>
+                    {{ enrollment.course }}
+                    ({{ enrollment.course.start_date|date:'d/m/Y'|default:'Sem data' }})   {# Filtro aninhado, filtro em cima de filtro #}
+                </h3>
+                {{ enrollment.course.description|linebreaks }}
+                <p>
+                    
+                </p>
+                <div class="pure-controls">
+                    <a href="{% url 'courses:announcements' enrollment.course.slug %}" class="pure-button pure-button-primary">Acessar</a>
+                    <a href="#" class="pure-button button-error">Cancelar</a>
+                </div>
+            </div>
+            {% empty %}
+            <aside class="pure-u-1">
+                <p>Nenhum curso inscrito</p>
+            </aside>
+            {% endfor %}
             {% endblock %}
         </div>
     </div>
 </div>
 {% endblock  %}
+
+
