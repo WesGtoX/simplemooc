@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from simplemooc.core.mail import send_mail_template
 
 
 class CourseManager(models.Manager):
@@ -118,3 +119,23 @@ class Comment(models.Model):
 		verbose_name = 'Comentário'
 		verbose_name_plural = 'Comentários'
 		ordering = ['created_at']	# ordenado de forma crescente.
+
+def post_save_announcement(instance, created, **kwargs):
+	if created:
+		subject = instance.title	# vai ser o título.
+		context = {
+			'announcement': instance
+		}
+		template_name = 'courses/announcement_mail.html'
+		enrollments = Enrollment.objects.filter(		# será enviado e-mail para todos que estiverem com inscrição, 'status' = 1.
+			course=instance.course, status=1
+		)
+		for enrollment in enrollments:		# para cada usuário inscrito no curso, será enviado um e-mail para ele.
+			recipient_list = [enrollment.user.email]
+			send_mail_template(subject, template_name, context, recipient_list)
+
+models.signals.post_save.connect(		# indica que a função deve ser executada naquele 'post_save', naquele signal que o Django nos fornece para o model.
+	post_save_announcement, 	# função que vai ser executada.
+	sender=Announcement, 		# quem é que vai enviar ele.
+	dispatch_uid='post_save_announcement'	# verifica se a função já está cadastrada nesse sinal.
+)
