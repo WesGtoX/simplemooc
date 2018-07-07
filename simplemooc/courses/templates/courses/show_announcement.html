@@ -1,5 +1,11 @@
 {% extends "courses/course_dashboard.html" %}
 
+{% block breadcrumb %}
+    {{ block.super }}
+    <li>/</li>
+    <li><a href="{% url 'courses:show_announcement' course.slug announcement.pk %}">{{ announcement }}</a></li>
+{% endblock %}
+
 {% block dashboard_content %}
     <div class="well">
         <h2>{{ announcement.title }}</h2>
@@ -21,12 +27,16 @@
         </p>
         {% endfor %}
         <form method="post" class="pure-form pure-form-stacked" id="add_comment">
+            {% csrf_token %}
             <fieldset>
+                {{ form.non_field_errors }}
+                {% for field in form %}
                 <div class="pure-control-group">
-                    <label for="password">Comentário</label>
-                    <textarea cols="40" rows="4"></textarea>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
                 </div>
-
+                {% endfor %}
                 <div class="pure-controls">
                     <button type="submit" class="pure-button pure-button-primary">Enviar</button>
                 </div>
