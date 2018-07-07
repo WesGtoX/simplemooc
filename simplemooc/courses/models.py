@@ -45,6 +45,53 @@ class Course(models.Model):
 		verbose_name_plural = 'Cursos'
 		ordering = ['name']
 
+class Lesson(models.Model):
+
+	name = models.CharField('Nome', max_length=100)		# nome da aula.
+	description = models.TextField('Descrição', blank=True)		# descrição não obrigatória.
+	number = models.IntegerField('Número (ordem)', blank=True, default=0)		# número apenas para ordenação das aulas.
+	release_date = models.DateField('Data de Liberação', blank=True, null=True)		# data para liberação da aula. Padrão sem data, nulo.
+
+	course = models.ForeignKey(		# ligação da aula com o curso. Lembrando que sempre que não se coloa o 'related_name', o Django vai criar o nome do 'model_setting'.
+		Course, verbose_name='Curso', 
+		related_name='lessons',
+		on_delete = models.CASCADE,		# 'on_delete' é obrigatório no Django 2.0
+	)
+
+	created_at = models.DateTimeField('Criado em', auto_now_add=True)
+	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+	def __str__(self):
+		return self.name
+
+	class Meta:
+		verbose_name = 'Aula'
+		verbose_name_plural = 'Aulas'
+		ordering = ['number']
+
+class Material(models.Model):	# conteúdo da aula, vai ter uma relação com a aula e ela vai ter vários materiais.
+
+	name = models.CharField('Nome', max_length=100)		# nome do material.
+	embedded = models.TextField('Vídeo embedded', blank=True)		# campo de texto para que seja adicionado vídos do YouTube, Vimeo, etc. Será o principal material da aula.
+	file = models.FileField(upload_to='lessons/materials', blank=True, null=True)		# arquivo de materiais, pdf, documento, etc.
+
+	lesson = models.ForeignKey(		# ligação dos materiais com as aulas.
+		Lesson, verbose_name='Aula', 
+		related_name='materials',
+		on_delete = models.CASCADE,		# 'on_delete' é obrigatório no Django 2.0
+	)
+
+	def is_enbedded(self):
+		return bool(self.enbedded)
+
+	def __str__(self):
+		return self.name
+
+	class Meta:
+		verbose_name = 'Material'
+		verbose_name_plural = 'Materiais'
+
+
 class Enrollment(models.Model):
 
 	STATUS_CHOICES = (	# seria uma tupla de tuplas, porque é a tupla nº de opções e para cada opção ele vai ter um valor que corresponde ao título. A outra será um texto qualquer que será exibido no lugar do número.
