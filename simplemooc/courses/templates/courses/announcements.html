@@ -3,10 +3,12 @@
 {% block dashboard_content %}
 {% for announcement in announcements %}
 <div class="well">
-    <h2>{{ announcement.title }}</h2>
+    <h2>
+        <a href="{% url 'courses:show_announcement' course.slug announcement.pk %}">{{ announcement.title }}</a>
+    </h2>
     {{ announcement.content|linebreaks }}
     <p>
-        <a href="#comments" title="">
+        <a href="{% url 'courses:show_announcement' course.slug announcement.pk %}#comments">
         <i class="fa fa-comments-o"></i>
         {% with comments_count=announcement.comments.count %}   {# armazena uma variável mais complexa em uma mais simples, para evitar sua repetoção, a variável criada fica disponível apenas dentro desse 'with'. #}
         {{ comments_count }}       {# mostra apenas a contagem de comentários. #}
