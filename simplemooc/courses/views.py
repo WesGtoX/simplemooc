@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from .models import Course, Enrollment, Announcement
 from .forms import ContactCourse, CommentForm
+from .decorators import enrollment_required
 
 def index(request):
 	courses = Course.objects.all()		# retorna todos o objetos cadastrados no bando de dados.
@@ -37,7 +38,7 @@ def details(request,slug):
 	template_name = 'courses/details.html'
 	return render(request, template_name, context)
 
-@login_required		# decorator para obrigar o usuário a estar logado.
+@login_required		# decorator, que o próprio Django já disponibiliza, para obrigar o usuário a estar logado. Olha o request, vê se o usuário está autenticado, se estiver, ele executa normalmente, se não ele redireciona o usuário para uma página de login.
 def enrollment(request, slug):
 	course = get_object_or_404(Course, slug=slug)	# pega o curso atual
 	enrollment, created = Enrollment.objects.get_or_create(		# esse metodo vai ser passado um filtro, 'qual vai ser o user do request'. Ele retorna uma tupla, a inscrição se ouver, caso não, será criado, e um boleano dizendo se criou ou não.
@@ -69,15 +70,9 @@ def undo_enrollment(request, slug):		# todas as páginas associadas ao curso est
 	return render(request, template, context)
 
 @login_required
+@enrollment_required
 def announcements(request, slug):
-	course = get_object_or_404(Course, slug=slug)
-	if not request.user.is_staff:
-		enrollment = get_object_or_404(
-			Enrollment, user=request.user, course=course
-		)
-		if not enrollment.is_approved():
-			messages.error(request, 'A sua inscrição está pendente')
-			return redirect('accounts:dashboard')
+	course = request.course 	# busca o 'curso' do 'request'.
 	template = 'courses/announcements.html'
 	context = {
 		'course': course,
@@ -86,15 +81,9 @@ def announcements(request, slug):
 	return render(request, template, context)
 
 @login_required
+@enrollment_required
 def show_announcement(request, slug, pk):
-	course = get_object_or_404(Course, slug=slug)
-	if not request.user.is_staff:
-		enrollment = get_object_or_404(
-			Enrollment, user=request.user, course=course
-		)
-		if not enrollment.is_approved():
-			messages.error(request, 'A sua inscrição está pendente')
-			return redirect('accounts:dashboard')
+	course = course = request.course 	# busca o 'curso' do 'request'.
 	announcement = get_object_or_404(course.announcements.all(), pk=pk)
 	form = CommentForm(request.POST or None)
 	if form.is_valid():
@@ -111,3 +100,4 @@ def show_announcement(request, slug, pk):
 		'form': form,
 	}
 	return render(request, template, context)
+
