@@ -1,9 +1,12 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
+
 from simplemooc.core.mail import send_mail_template
 
 
 class CourseManager(models.Manager):
+
 	def search(self, query):	# para fazer filtro no banco de dados.
 		return self.get_queryset().filter(		# busca um objeto do tipo 'queryset' no banco de dados, que fornece os registros do banco de dados.
 			models.Q(name__icontains=query) | \
@@ -21,7 +24,7 @@ class Course(models.Model):
 		'Data de Início', null=True, blank=True		# nesse caso no blank também não é obrigatório, mas o valor null define que a nivel de banco de dados ele recebe valor nulo.
 	)
 	image = models.ImageField(
-		upload_to='course/images', verbose_name='Imagem', 
+		upload_to='courses/images', verbose_name='Imagem', 
 		null=True, blank=True
 	)
 
@@ -35,15 +38,20 @@ class Course(models.Model):
 
 	@models.permalink	# pega a tupla e usa uma função chamada reverse que está no pacote: "from django.core.urlresolvers import reverse", é uma forma de resgatar a url dado um nome. E com isso ele retonar a url.
 	def get_absolute_url(self):		# metodo que retorna uma tupla
-		return ('courses:details',(), {'slug': self.slug})
+		return ('courses:details', (), {'slug': self.slug})
 				# 1º parâmetro: url
 				# 2º parâmetro: argumentos não nomeaveis (não estamos utilizando)
 				# 3º parâmetro: argumentos nomeaveis que é um dicionário (estamos utilizando)
+
+	def release_lessons(self):		# método que retorna todas as aulas disponíveis desse curso.
+		today = timezone.now().date()
+		return self.lessons.filter(release_date__gte=today)		# '__gte' slow caps da queryset, maior ou igual.
 
 	class Meta:		# uma versão mais bonita de falar essa classe.
 		verbose_name = 'Curso'
 		verbose_name_plural = 'Cursos'
 		ordering = ['name']
+
 
 class Lesson(models.Model):
 
@@ -52,7 +60,7 @@ class Lesson(models.Model):
 	number = models.IntegerField('Número (ordem)', blank=True, default=0)		# número apenas para ordenação das aulas.
 	release_date = models.DateField('Data de Liberação', blank=True, null=True)		# data para liberação da aula. Padrão sem data, nulo.
 
-	course = models.ForeignKey(		# ligação da aula com o curso. Lembrando que sempre que não se coloa o 'related_name', o Django vai criar o nome do 'model_setting'.
+	course = models.ForeignKey(		# ligação da aula com o curso. Lembrando que sempre que não se coloca o 'related_name', o Django vai criar o nome do 'model_setting'.
 		Course, verbose_name='Curso', 
 		related_name='lessons',
 		on_delete = models.CASCADE,		# 'on_delete' é obrigatório no Django 2.0
@@ -64,10 +72,17 @@ class Lesson(models.Model):
 	def __str__(self):
 		return self.name
 
+	def is_available(self):		# diz se a aula está disponível ou não.
+		if self.release_date:
+			today = timezone.now().date()
+			return self.release_date >= today
+		return False
+
 	class Meta:
 		verbose_name = 'Aula'
 		verbose_name_plural = 'Aulas'
 		ordering = ['number']
+
 
 class Material(models.Model):	# conteúdo da aula, vai ter uma relação com a aula e ela vai ter vários materiais.
 
@@ -122,12 +137,13 @@ class Enrollment(models.Model):
 		self.save()
 
 	def is_approved(self):
-		return self.satus == 1
+		return self.status == 1
 
 	class Meta:
 		verbose_name='Inscrição'
 		verbose_name_plural='Inscrições'
 		unique_together = (('user', 'course'),)	# essa opão é uma tupla de tupla também, para cada tupla, ele deve indicar dois ou mais campos. É para evitar repetição de inscrição.
+
 
 class Announcement(models.Model):
 
@@ -151,6 +167,7 @@ class Announcement(models.Model):
 		verbose_name_plural = 'Anúncios'
 		ordering = ['-created_at']	# ordena a listagem de curso decrescente, sempre o mais atual sera exibido primeiro.
 
+
 class Comment(models.Model):
 
 	announcement = models.ForeignKey(
@@ -166,6 +183,7 @@ class Comment(models.Model):
 		verbose_name = 'Comentário'
 		verbose_name_plural = 'Comentários'
 		ordering = ['created_at']	# ordenado de forma crescente.
+
 
 def post_save_announcement(instance, created, **kwargs):
 	if created:

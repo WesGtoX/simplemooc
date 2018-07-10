@@ -1,0 +1,23 @@
+{% extends "courses/course_dashboard.html" %}
+
+{% block dashboard_content %}
+{% for lesson in lessons %}
+<div class="well">
+    <h2><a href="{% url 'courses:lesson' course.slug lesson.pk %}">{{ lesson }}</a></h2>
+    <p>
+        {{ lesson.description|truncatewords:'20' }} {# recebe como argumento o número de palavras que quero exibir, e após isso ele coloca "..." #}
+        <br />
+        <a href="{% url 'courses:lesson' course.slug lesson.pk %}" title="">
+        <i class="fa fa-eye"></i>
+        Acessar Aula
+        </a>
+    </p>
+</div>
+{% empty %}
+<div class="well">
+    <h2>
+        Nenhuma aula disponível.
+    </h2>
+</div>
+{% endfor %}
+{% endblock %}
