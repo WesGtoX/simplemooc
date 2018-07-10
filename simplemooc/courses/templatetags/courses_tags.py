@@ -6,9 +6,9 @@ from simplemooc.courses.models import Enrollment
 
 @register.inclusion_tag('courses/templatetags/my_courses.html')	# decorator, 'inclusion_tag' converte a função 'my_course' em uma tag de fato que pode ser usado com django.
 def my_courses(user):	# função que dado um usuário, pega as inscrições desse usuário e coloca em um dicionário, depois retorna o dicionário.
-	enrollment = Enrollment.objects.filter(user=user)	# retorna as inscrições do usúário.
+	enrollments = Enrollment.objects.filter(user=user)	# retorna as inscrições do usúário.
 	context = {
-		'enrollments': enrollment
+		'enrollments': enrollments
 	}
 	return context
 

@@ -63,7 +63,7 @@ class Lesson(models.Model):
 	course = models.ForeignKey(		# ligação da aula com o curso. Lembrando que sempre que não se coloca o 'related_name', o Django vai criar o nome do 'model_setting'.
 		Course, verbose_name='Curso', 
 		related_name='lessons',
-		on_delete = models.CASCADE,		# 'on_delete' é obrigatório no Django 2.0
+		on_delete = models.CASCADE		# 'on_delete' é obrigatório no Django 2.0
 	)
 
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
@@ -93,11 +93,11 @@ class Material(models.Model):	# conteúdo da aula, vai ter uma relação com a a
 	lesson = models.ForeignKey(		# ligação dos materiais com as aulas.
 		Lesson, verbose_name='Aula', 
 		related_name='materials',
-		on_delete = models.CASCADE,		# 'on_delete' é obrigatório no Django 2.0
+		on_delete = models.CASCADE		# 'on_delete' é obrigatório no Django 2.0
 	)
 
-	def is_enbedded(self):
-		return bool(self.enbedded)
+	def is_embedded(self):
+		return bool(self.embedded)
 
 	def __str__(self):
 		return self.name
@@ -117,16 +117,16 @@ class Enrollment(models.Model):
 
 	user = models.ForeignKey(
 		settings.AUTH_USER_MODEL, verbose_name='Usuário',
-		on_delete = models.CASCADE,		# 'on_delete' é obrigatório no Django 2.0
-		related_name='enrollments'		# é um atributo que será criado no usuário, que é o model que está sendo realizado a ForeignKey para fazer uma buscar no model filho, faz a relação com esse usuário.
+		related_name='enrollments',		# é um atributo que será criado no usuário, que é o model que está sendo realizado a ForeignKey para fazer uma buscar no model filho, faz a relação com esse usuário.
+		on_delete = models.CASCADE		# 'on_delete' é obrigatório no Django 2.0
 	)
 	course = models.ForeignKey(		# indica a situação do usuário no curso.
 		Course, verbose_name='Curso', 
-		on_delete = models.CASCADE,		# 'on_delete' é obrigatório no Django 2.0
-		related_name='enrollments'
+		related_name='enrollments',
+		on_delete = models.CASCADE		# 'on_delete' é obrigatório no Django 2.0
 	)
 	status = models.IntegerField(
-		'Situação', choices=STATUS_CHOICES, default='1', blank=True
+		'Situação', choices=STATUS_CHOICES, default=1, blank=True
 	)
 
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
@@ -140,18 +140,17 @@ class Enrollment(models.Model):
 		return self.status == 1
 
 	class Meta:
-		verbose_name='Inscrição'
-		verbose_name_plural='Inscrições'
+		verbose_name = 'Inscrição'
+		verbose_name_plural = 'Inscrições'
 		unique_together = (('user', 'course'),)	# essa opão é uma tupla de tupla também, para cada tupla, ele deve indicar dois ou mais campos. É para evitar repetição de inscrição.
 
 
 class Announcement(models.Model):
 
 	course = models.ForeignKey(
-		Course,
-		on_delete = models.CASCADE,
-		verbose_name='Curso',
-		related_name='announcements'		# dentro do curso vai ter um atributo chamado 'announcements' que vai estar os anúncios relacionados a ele.
+		Course, verbose_name='Curso',
+		related_name='announcements',		# dentro do curso vai ter um atributo chamado 'announcements' que vai estar os anúncios relacionados a ele.
+		on_delete = models.CASCADE
 	)
 	title = models.CharField('Título', max_length=100)
 	content = models.TextField('Conteúdo')
@@ -170,10 +169,16 @@ class Announcement(models.Model):
 
 class Comment(models.Model):
 
-	announcement = models.ForeignKey(
-		Announcement, verbose_name='Anúncio', related_name='comments', on_delete = models.CASCADE,	# uma determinada instancia de anúncio vai ter uma ação chamada 'comments' que irá trazer os seus comentários.
+	announcement = models.ForeignKey(		# uma determinada instancia de anúncio vai ter uma ação chamada 'comments' que irá trazer os seus comentários.
+		Announcement, verbose_name='Anúncio', 
+		related_name='comments', 
+		on_delete = models.CASCADE
 	)
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='usuário', on_delete = models.CASCADE)		# usuário que comentou.	
+	user = models.ForeignKey(		# usuário que comentou.
+		settings.AUTH_USER_MODEL, 
+		verbose_name='usuário', 
+		on_delete = models.CASCADE
+	)	
 	comment = models.TextField('Comentário')
 
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)

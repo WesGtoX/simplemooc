@@ -7,12 +7,12 @@
     <meta name="description" content="Simple MOOC - Uma simples plataforma de ensino a distância" />
     <title>Simple MOOC</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
 </head>
 <body>
 <div class="header">
-    <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
+    <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
         <a class="pure-menu-heading" href="{% url 'core:home' %}">SIMPLE MOOC</a>
         <ul>
             <li class="pure-menu-selected"><a href="{% url 'core:home' %}">Início</a></li>
@@ -28,18 +28,16 @@
     </div>
 </div>
 <div class="content">
+    {% if messages %}
     <div class="pure-g-r content-ribbon">
-        {% if messages %}
         <aside class="pure-u-1">
             {% for message in messages %}
             <p>{{ message }}</p>
             {% endfor %}
         </aside>
-        {% endif %}
     </div>
-
+    {% endif %}
     {% block content %}{% endblock %} {# conteúdo que será colocado. #}
-
     <div class="footer">        
         Copyright &copy 2018 - Wesley Mendes | Simple MOOC - Uma simples plataforma de ensino a distância
     </div>

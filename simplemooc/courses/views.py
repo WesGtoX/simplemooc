@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Course, Enrollment, Announcement, Lesson
+from .models import Course, Enrollment, Announcement, Lesson, Material
 from .forms import ContactCourse, CommentForm
 from .decorators import enrollment_required
 
@@ -14,7 +14,7 @@ def index(request):
 	}
 	return render(request, template_name, context)
 
-#def details(request,pk):
+#def details(request, pk):
 #	course = get_object_or_404(Course, pk=pk)		# retorna a página do curso 'pk', é o númeroda página referente ao id do curso do banco de dados. Caso não for encontrada, retorna uma página 404
 #	context = {
 #		'course': course
@@ -22,7 +22,7 @@ def index(request):
 #	template_name = 'courses/details.html'
 #	return render(request, template_name, context)
 
-def details(request,slug):
+def details(request, slug):
 	course = get_object_or_404(Course, slug=slug)		# ao invés de passar o 'id', passa o 'slug'
 	context = {}
 	if request.method == 'POST':	# verifica se o metodo é um 'post' ou se é um metodo 'get'.
@@ -64,8 +64,8 @@ def undo_enrollment(request, slug):		# todas as páginas associadas ao curso est
 		return redirect('accounts:dashboard')
 	template = 'courses/undo_enrollment.html'
 	context = {
-		'enrollment':enrollment,
-		'course':course,
+		'enrollment': enrollment,
+		'course': course,
 	}
 	return render(request, template, context)
 
@@ -76,14 +76,14 @@ def announcements(request, slug):
 	template = 'courses/announcements.html'
 	context = {
 		'course': course,
-		'announcements':course.announcements.all()	# todos os anúncios do curso está nessa variável.
+		'announcements': course.announcements.all()	# todos os anúncios do curso está nessa variável.
 	}
 	return render(request, template, context)
 
 @login_required
 @enrollment_required
 def show_announcement(request, slug, pk):
-	course = course = request.course 	# busca o 'curso' do 'request'.
+	course = request.course 	# busca o 'curso' do 'request'.
 	announcement = get_object_or_404(course.announcements.all(), pk=pk)
 	form = CommentForm(request.POST or None)
 	if form.is_valid():
@@ -119,7 +119,7 @@ def lessons(request, slug):
 @enrollment_required
 def lesson(request, slug, pk):
 	course = request.course
-	lesson = get_object_or_404(Lesson, pk=pk, course=course)	# 'course=course' garantia de as aulas são mesmo desse curso.
+	lesson = get_object_or_404(Lesson, pk=pk, course=course)		# 'course=course' garantia de as aulas são mesmo desse curso.
 	if not request.user.is_staff and not lesson.is_available():		# verificação básica de segurança
 		messages.error(request, 'Esta aula não está disponível')
 		return redirect('courses:lessons', slug=course.slug)
@@ -127,5 +127,24 @@ def lesson(request, slug, pk):
 	context = {
 		'course': course,
 		'lesson': lesson
+	}
+	return render(request, template, context)
+
+@login_required
+@enrollment_required
+def material(request, slug, pk):
+	course = request.course
+	material = get_object_or_404(Material, pk=pk, lesson__course=course)	# não tem relacionamento com o curso, mas tem relacionamento com a aula que tem relacionamento com o curso. Quando coloca '__' vou acessar uma propriedade já do outro objeto 'lesson__course'.
+	lesson = material.lesson
+	if not request.user.is_staff and not lesson.is_available():				# verificação básica de segurança
+		messages.error(request, 'Este material não está disponível')
+		return redirect('courses:lesson', slug=course.slug, pk=lesson.pk)
+	if not material.is_embedded():		# verifica se o usuário é 'is_embedded', se não for ele redireciona para 'material.file.url', se for ele exibe realmente o template.
+		return redirect(material.file.url)
+	template = 'courses/material.html'
+	context = {
+		'course': course,
+		'lesson': lesson,
+		'material': material
 	}
 	return render(request, template, context)

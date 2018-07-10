@@ -1,5 +1,11 @@
 {% extends "courses/course_dashboard.html" %}
 
+{% block breadcrumb %}
+    {{ block.super }}
+    <li>/</li>
+    <li><a href="{% url 'courses:lessons' course.slug %}">Aulas</a></li>
+{% endblock %}
+
 {% block dashboard_content %}
 {% for lesson in lessons %}
 <div class="well">

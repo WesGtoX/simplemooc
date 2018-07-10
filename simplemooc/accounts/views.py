@@ -41,7 +41,6 @@ def password_reset(request):
 	template_name = 'accounts/password_reset.html'
 	context = {}
 	form = PasswordResetForm(request.POST or None)		# forma mais pratica para que os dados não sejam validados, quando for 'POST' de fato ele vai validar os dados, e quando não for, não vai ser validado.
-	print(request.POST)
 	if form.is_valid():
 		form.save()
 		context['success'] = True	# exibe a mensagem de erro.
@@ -52,7 +51,7 @@ def password_reset_confirm(request, key):	# pega a chave que está na url, busca
 	template_name = 'accounts/password_reset_confirm.html'
 	context = {}
 	reset = get_object_or_404(PasswordReset, key=key)
-	form = SetPasswordForm(user=reset.user, data=request.POST or None)	# 
+	form = SetPasswordForm(user=reset.user, data=request.POST or None)
 	if form.is_valid():
 		form.save()
 		context['success'] = True

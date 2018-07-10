@@ -5,9 +5,10 @@ from django.core import validators
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, UserManager)
 from django.conf import settings
 
+
 class User(AbstractBaseUser, PermissionsMixin):
 
-	username =  models.CharField(		# nome de usuário padrão, que também é unico.
+	username = models.CharField(		# nome de usuário padrão, que também é unico.
 		'Nome de Usuário', max_length=30, unique=True,
 		validators=[validators.RegexValidator(re.compile('^[\w.@+-]+$'),	# valida se o nome de usuário recebeu os caracteres permitidos.
 			'O nome de usuário só pode conter letras, dígitos ou os '
@@ -34,18 +35,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 		return str(self)	# o fullname é a representação string do próprio objeto.
 
 	class Meta:
-		verbose_name ='Usuário'
+		verbose_name = 'Usuário'
 		verbose_name_plural = 'Usuários'
+
 
 class PasswordReset(models.Model):		# esse model tem um relacionamento de 'n' para '1' com o usuário, o usuário pode ter um ou mais 'PasswordReset'.
 
 	user = models.ForeignKey(
 		settings.AUTH_USER_MODEL, verbose_name='Usuário',
-		on_delete = models.CASCADE,		# 'on_delete' é obrigatório no Django 2.0
-		related_name='resets'
+		related_name='resets',
+		on_delete = models.CASCADE		# 'on_delete' é obrigatório no Django 2.0
 	)
 	key = models.CharField('Chave', max_length=100, unique=True)
-	created_at = models.DateField('Criado em', auto_now_add=True)	# vou permitir que esse usuário clicke nesse link randômico, em no máximo 2 horas.
+	created_at = models.DateTimeField('Criado em', auto_now_add=True)	# vou permitir que esse usuário clicke nesse link randômico, em no máximo 2 horas.
 	confirmed = models.BooleanField('Confirmado?', default=False, blank=True)	# vai indicar se o link foi usado.
 	
 	def __str__(self):

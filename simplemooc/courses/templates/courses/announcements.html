@@ -12,7 +12,7 @@
         <i class="fa fa-comments-o"></i>
         {% with comments_count=announcement.comments.count %}   {# armazena uma variável mais complexa em uma mais simples, para evitar sua repetoção, a variável criada fica disponível apenas dentro desse 'with'. #}
         {{ comments_count }}       {# mostra apenas a contagem de comentários. #}
-        Comentário{{ comments_count|pluralize}}        {# template tag 'pluralize', se for 0 ou mais de 1 ele vai jogar um 's' se for 1 ele mantem intácto por padrão. #}
+        Comentário{{ comments_count|pluralize }}        {# template tag 'pluralize', se for 0 ou mais de 1 ele vai jogar um 's' se for 1 ele mantem intácto por padrão. #}
         {% endwith %}
         </a>
     </p>

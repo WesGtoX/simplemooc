@@ -17,9 +17,9 @@
         <div class="l-box">
             <a href="{{ course.get_absolute_url }}">    {# 'href=' retorna a url do curso #}
             {% if course.image %}      {# se houver alguma imagem... #}
-                <img src="{{ course.image.url }}" alt="{{ course.name }}"/>
+            <img src="{{ course.image.url }}" alt="{{ course.name }}" />
             {% else %}      {# caso não for verdadeiro. #}
-                <img src="{% static 'img/course-image.png' %}" alt="{{ course.name }}"/>
+            <img src="{% static 'img/course-image.png' %}" alt="{{ course.name }}" />
             {% endif %}
             </a>
         </div>
@@ -35,9 +35,9 @@
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1">
         <div class="l-box">
-            <p>Nunhum curso está disponíveis na plataforma.</p>
+            <p>Nenhum curso está disponíveis na plataforma.</p>
         </div>
     </div>
 </div>
 {% endfor %}
-{% endblock %}}
+{% endblock %}

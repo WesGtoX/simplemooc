@@ -9,6 +9,7 @@ from .models import PasswordReset
 
 User = get_user_model()		# indica que estamos usando o user que o Django reconhece como usuário do sistema que no nosso caso é o 'CustomUser'
 
+
 class PasswordResetForm(forms.Form):		# não vai ser um 'ModelForm' porque ele vai estar associado a nenhum model, inicialmente. Porque só queremos um campo de e-mail.
 
 	email = forms.EmailField(label='E-mail')
@@ -27,11 +28,12 @@ class PasswordResetForm(forms.Form):		# não vai ser um 'ModelForm' porque ele v
 		reset = PasswordReset(key=key, user=user)	# cria o model para resetar a senha.
 		reset.save()
 		template_name = 'accounts/password_reset_mail.html'
-		subject = 'Criar nova Senha no Simple MOOC'		# assunto.
+		subject = 'Criar nova senha no Simple MOOC'		# assunto.
 		context = {
-		'reset': reset,
+			'reset': reset,
 		}
 		send_mail_template(subject, template_name, context, [user.email])		# função criada de envio de email no 'core'
+
 
 class RegisterForm(forms.ModelForm):
 	
@@ -44,7 +46,7 @@ class RegisterForm(forms.ModelForm):
 		password1 = self.cleaned_data.get("password1")		# pega a senha 1...
 		password2 = self.cleaned_data.get("password2")		# ...pega a senha 2...
 		if password1 and password2 and password1 != password2:		# ...verifica se foram enviadas, e depois se são iguais.
-			raise forms.ValidationError('A confirmação de senha não está correta')		# se elas não forem iguais mostra uma mensagem de erro.
+			raise forms.ValidationError('A confirmação não está correta')		# se elas não forem iguais mostra uma mensagem de erro.
 		return password2
 
 	def save(self, commit=True):	# novo metodo 'save' que substitui o do 'UserCreationForm'. Ele recebe o commite igual a 'True', chama o save do meu 'super' que no caso é 'UserCreationForm'.
@@ -57,6 +59,7 @@ class RegisterForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ['username', 'email']		# no formulário de registro vai precisar apenas do 'username' e 'email'.
+
 
 class EditAccountForm(forms.ModelForm):
 	

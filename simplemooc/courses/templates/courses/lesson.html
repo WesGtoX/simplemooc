@@ -1,16 +1,17 @@
 {% extends "courses/course_dashboard.html" %}
 
+{% block breadcrumb %}
+    {{ block.super }}
+    <li>/</li>
+    <li><a href="{% url 'courses:lessons' course.slug %}">Aulas</a></li>
+    <li>/</li>
+    <li><a href="{% url 'courses:lesson' course.slug lesson.pk %}">{{ lesson }}</a></li>
+{% endblock %}
+
 {% block dashboard_content %}
 <div class="well">
-    <h2><a href="#">Apresentação do Curso</a></h2>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+    <h2><a href="{% url 'courses:lesson' course.slug lesson.pk %}">{{ lesson }}</a></h2>
+	{{ lesson.description|linebreaks }}
     <p>
         <h4>Material da Aula</h4>
         <table class="pure-table full">
@@ -25,28 +26,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+            	{% for material in lesson.materials.all %}
+                <tr class="{% cycle '' 'pure-table-odd' %}">	{# tabela zebrada, uma hora retorna 'vazio', outra hora retorna o 'pure-table-odd'. #}
                     <td>
-                        Vídeo de Apresentação
+                        {{ material }}
                     </td>
                     <td>
-                        <a href="#">
+                    	{% if material.is_embedded %}
+                        <a href="{% url 'courses:material' course.slug material.pk %}">
                             <i class"fa fa-video-camera"></i>
                             Acessar
                         </a>
+                        {% else %}
+		                <a target="_blank" href="{{ material.file.url }}">
+		                    <i class"fa fa-download"></i>
+		                    Baixar
+		                </a>
+                        {% endif %}
                     </td>
                 </tr>
-                <tr class="pure-table-odd">
-                    <td>
-                        Slides da Apresentação
-                    </td>
-                    <td>
-                        <a href="#">
-                            <i class"fa fa-download"></i>
-                            Baixar
-                        </a>
-                    </td>
-                </tr>
+				{% endfor %}
             </tbody>
         </table>
     </p>

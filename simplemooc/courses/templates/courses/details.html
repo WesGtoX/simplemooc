@@ -30,7 +30,7 @@
     <div class="pure-u-1-3">
         <div class="l-box">
             {% if course.image %}
-            <img src="{{course.image.url }}" alt="" />
+            <img src="{{ course.image.url }}" alt="" />
             {% else %}
             <img src="{% static 'img/course-image.png' %}" alt="" />
             {% endif %}
