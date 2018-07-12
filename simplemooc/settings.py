@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'simplemooc.core',
     'simplemooc.accounts',
     'simplemooc.courses',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
