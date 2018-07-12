@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 # ARMAZENA O DIRETORIO BASE DO PROJETO __file__ É REFERENCIA PARA O PRIMEIRO DIRETORIO simplomooc
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     # path da aplicação (movendo o app para pasta simplemooc, pode ser referenciada dessa maneira).
     'simplemooc.core',
@@ -47,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,13 +84,13 @@ WSGI_APPLICATION = 'simplemooc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        # SQLITE3 SO PRECISA DO NOME NAS CONFIG
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-#}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        # SQLITE3 SO PRECISA DO NOME NAS CONFIG
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation
@@ -149,11 +154,30 @@ AUTH_USER_MODEL = 'accounts.User'   # setar o nome da 'app'.'model', com isso o 
 
 # Heroku settings
 
+# Change 'default' database configuration with $DATABASE_URL.
+DATABASES['default'].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Configure Django App for Heroku.
-import django_heroku
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'static'),
+]
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Activate Django-Heroku.
 django_heroku.settings(locals())

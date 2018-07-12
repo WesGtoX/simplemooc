@@ -1,1 +1,1 @@
-web: gunicorn simplemooc.wsgi --log-file -
+web: gunicorn simplemooc.wsgi
