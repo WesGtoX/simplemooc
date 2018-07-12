@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import dj_database_url
-import django_heroku
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 # ARMAZENA O DIRETORIO BASE DO PROJETO __file__ É REFERENCIA PARA O PRIMEIRO DIRETORIO simplomooc
@@ -153,6 +150,7 @@ AUTH_USER_MODEL = 'accounts.User'   # setar o nome da 'app'.'model', com isso o 
 
 # Heroku settings
 
+import dj_database_url
 # Change 'default' database configuration with $DATABASE_URL.
 DATABASES['default'].update(dj_database_url.config(conn_max_age=600, ssl_require=True))
 
@@ -174,5 +172,6 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+import django_heroku
 # Activate Django-Heroku.
 django_heroku.settings(locals())
