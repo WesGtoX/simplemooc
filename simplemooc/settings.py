@@ -27,7 +27,7 @@ SECRET_KEY = '2qj^&62y_knpe0^7v_rq&imx(gsqmms(8ofdub*31a)_^b7&at'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['testserver']
+#ALLOWED_HOSTS = ['testserver']
 
 
 # Application definition
@@ -79,13 +79,13 @@ WSGI_APPLICATION = 'simplemooc.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        # SQLITE3 SO PRECISA DO NOME NAS CONFIG
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        # SQLITE3 SO PRECISA DO NOME NAS CONFIG
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
 
 
 # Password validation
@@ -153,7 +153,7 @@ import dj_database_url
 DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Allow all host headers
-ALLOWED_HOSTS = ['testserver']
+ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
