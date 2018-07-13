@@ -8,7 +8,7 @@
 
 -----------------
 -->
-# "Simplomooc"
+# Simplomooc
 
 Simple MOOC is a simple distance learning platform for MOOC (Massive Open Online Course) courses. 
 The "Simple" is related to the simplicity and minimalistic of the design and the objectivity of its functionalities.
@@ -21,14 +21,14 @@ Author: [Wesley Mendes](https://github.com/WesGtoX)
 
 ## Simple MOOC Features ##
 
-  - General:
+>  - General:
 
       - Home with ceatured courses;
       - CRUD of courses and instructors;
       - Student registration;
       - Listing of available courses and a way for students to enroll.
 
-  - Functionalities related to the Course:
+>  - Functionalities related to the Course:
 
       - Ad System (bulletin board);
       - Classroom System (Video classroom + any digital material such as slides, pdf's,...);
