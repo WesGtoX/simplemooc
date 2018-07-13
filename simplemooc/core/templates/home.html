@@ -1,5 +1,7 @@
 {% extends "base.html" %} {# diz que o conteudo extende do base.html. #}
 
+{% load static %}
+
 {% block content %} {# template tag que vem com django, indica onde será colocado, delimita até o {% endblock %}. #}
 <div class="splash">
     <div class="pure-g-r">
@@ -30,16 +32,14 @@
     </div>
     <div class="pure-u-1-3">
         <div class="l-box">
-            <img src="http://placehold.it/400x250"
-                 alt="Vídeo aulas e materiais digitais.">
+            <img src="{% static 'img/video-aulas-materiais.png' %}" alt="Vídeo aulas e materiais digitais." width="450px">
         </div>
     </div>
 </div>
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1-3">
         <div class="l-box">
-            <img src="http://placehold.it/400x250"
-                 alt="Fórum de Dúvidas">
+            <img src="{% static 'img/forum-duvidas.png' %}" alt="Fórum de Dúvidas" width="450px">
         </div>
     </div>
     <div class="pure-u-2-3">
@@ -64,16 +64,14 @@
     </div>
     <div class="pure-u-1-3">
         <div class="l-box">
-            <img src="http://placehold.it/400x250"
-                 alt="Exercícios">
+            <img src="{% static 'img/exercicios.png' %}" alt="Exercícios" width="450px">
         </div>
     </div>
 </div>
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1-3">
         <div class="l-box">
-            <img src="http://placehold.it/400x250"
-                 alt="Mural de Avisos">
+            <img src="{% static 'img/mural-avisos.png' %}" alt="Mural de Avisos" width="450px">
         </div>
     </div>
     <div class="pure-u-2-3">

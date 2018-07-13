@@ -9,29 +9,33 @@
 -----------------
 -->
 # "Simplomooc"
-<!--
-//descricao do "Projeto"
-//example: "Application based on Mercado Livre".
 
-//modelo feito nos cursos DevPleno
-//example: "Made in the Hands-on ReactJS course by [Tulio Faria](https://github.com/tuliofaria)"
+Simple MOOC is a simple distance learning platform for MOOC (Massive Open Online Course) courses. 
+The "Simple" is related to the simplicity and minimalistic of the design and the objectivity of its functionalities.
 
-Building using (Linguagem, Framework, Biblioteca).
+Made in the [Python 3 na Web com Django (Básico e Intermediário)](https://www.udemy.com/python-3-na-web-com-django-basico-intermediario/) course by [Gileno Filho](https://github.com/gileno)"
+
+Building using Python 3.6.6 and [Django Framework 2.0.7](https://www.djangoproject.com/).
 
 Author: [Wesley Mendes](https://github.com/WesGtoX)
 
-## What is the (Linguagem, Framework, Biblioteca)? ##
+## Simple MOOC Features ##
 
-//descricao (Linguagem, Framework, Biblioteca)
-//example: "ReactJS is an open-source JavaScript library which is used for building user interfaces specifically for single page applications".
+  - General:
 
-Created and designed by []().
+      - Home with ceatured courses;
+      - CRUD of courses and instructors;
+      - Student registration;
+      - Listing of available courses and a way for students to enroll.
 
-## References ##
+  - Functionalities related to the Course:
 
-//Caso exista
+      - Ad System (bulletin board);
+      - Classroom System (Video classroom + any digital material such as slides, pdf's,...);
+      - Forums;
+      - Tracking of the contents accessed by the students (both for administrators to know what was access, and for students to know what will come from the course);
+      - System of exercises (exercises of submission and exercises online).
 
 ### License ###
 
 [MIT](LICENSE)
--->
