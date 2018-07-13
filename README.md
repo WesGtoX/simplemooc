@@ -21,20 +21,20 @@ Author: [Wesley Mendes](https://github.com/WesGtoX)
 
 ## Simple MOOC Features ##
 
->  - General:
-
-      - Home with ceatured courses;
-      - CRUD of courses and instructors;
-      - Student registration;
-      - Listing of available courses and a way for students to enroll.
-
->  - Functionalities related to the Course:
-
-      - Ad System (bulletin board);
-      - Classroom System (Video classroom + any digital material such as slides, pdf's,...);
-      - Forums;
-      - Tracking of the contents accessed by the students (both for administrators to know what was access, and for students to know what will come from the course);
-      - System of exercises (exercises of submission and exercises online).
+> - General:
+>
+>   - Home with ceatured courses;
+>   - CRUD of courses and instructors;
+>   - Student registration;
+>   - Listing of available courses and a way for students to enroll.
+>
+> - Functionalities related to the Course:
+>
+>   - Ad System (bulletin board);
+>   - Classroom System (Video classroom + any digital material such as slides, pdf's,...);
+>   - Forums;
+>   - Tracking of the contents accessed by the students (both for administrators to know what was access, and for students to know what will come from the course);
+>   - System of exercises (exercises of submission and exercises online).
 
 ### License ###
 
