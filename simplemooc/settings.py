@@ -152,7 +152,8 @@ LOGIN_REDIRECT_URL = 'core:home'    # redireciona para a home
 LOGOUT_URL = 'accounts:logout'      # url de logout
 AUTH_USER_MODEL = 'accounts.User'   # setar o nome da 'app'.'model', com isso o Django vai saber que o usuário do sistema é o nosso model e não o padrão do Django.
 
-# Heroku settings
+
+# HEROKU SETTINGS
 
 import dj_database_url
 
