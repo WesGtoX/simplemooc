@@ -47,7 +47,7 @@
     </div>
     <div class="pure-u-2-3">
         <div class="inner">
-            {% for thread in object_list %}
+            {% for thread in object_list %}		{# a 'ListView' vai nos fornecer um valor chamado 'object_list', que é justamente a lista de modelos, instâncias, que serve para a página atual, já que colocamos paginação, se não, seriam todos os objetos. #}
             <div class="well">
                 <h3><a href="" title="">{{ thread.title }}</a></h3>
                 <h5>
@@ -56,8 +56,8 @@
                 <p>
                     <i class="fa fa-tags"></i>
                     Tags: 
-                    {% for tag in thread.tags.all %}
-                    <a href="" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+                    {% for tag in thread.tags.all %}	{# lista todas as tags #}
+                    <a href="" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}		{# 'forloop.last' ele não coloca ',' para o último. #}
                     {% endfor %}
                     <a class="fright" href="" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
                 </p>

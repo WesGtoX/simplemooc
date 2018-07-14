@@ -1,10 +1,24 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View, ListView
+
+from .models import Thread
+
+#class ForumView(View):
+
+#	#template_name = 'forum/index.html'
+#    def get(self, request, *args, **kwargs):
+#        return render(request, 'forum/index.html')
 
 
-class ForumView(TemplateView):
+#class ForumView(TemplateView):
 
-	template_name = 'forum/index.html'
+#	#template_name = 'forum/index.html'
+class ForumView(ListView):
+
+	model = Thread
+	paginate_by = 10
+	template_name='forum/index.html'
+
 
 index = ForumView.as_view()		# 'index' recebe o resultado de 'ForumView.as_view()' o 'as_view' retorna uma função.
 
