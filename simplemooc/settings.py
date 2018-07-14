@@ -43,10 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    #libs
+    'taggit',
+    #apps
     # path da aplicação (movendo o app para pasta simplemooc, pode ser referenciada dessa maneira).
     'simplemooc.core',
     'simplemooc.accounts',
     'simplemooc.courses',
+    'simplemooc.forum',
 ]
 
 MIDDLEWARE = [
@@ -131,8 +135,8 @@ USE_TZ = True
 
 #STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')      # os arquivos relacionados a modelo, serão salvos nesse diretório
-MEDIA_URL = '/media/'    # seria a url base para os arquivos staticos que são feitos uploads pelo usuário
+MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')      # os arquivos relacionados a modelo, serão salvos nesse diretório.
+MEDIA_URL = '/media/'    # seria a url base para os arquivos estáticos que são feitos uploads pelo usuário.
 
 # E-mails
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # settings padrão (pode ser retirada)
