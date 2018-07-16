@@ -64,17 +64,17 @@
             </div>
             {% endfor %}
             <ul class="pagination pagination-centered">
-                {% if page_obj.has_previous %}
+                {% if page_obj.has_previous %}		{# se tem uma página anterior, ao invés do número da página, vai colocar 'Anterior'. #}
                 <li>
                     <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">Anterior</a>
                 </li>
                 {% endif %}
                 {% for page in paginator.page_range %}
-                <li{% if page == page_obj.number %} class="active"{% endif %}>
+                <li{% if page == page_obj.number %} class="active"{% endif %}>		{# se ativo, alterar cor da página. #}
                     <a href="?page={{ page }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">{{ page }}</a>
                 </li>
                 {% endfor %}
-                {% if page_obj.has_next %}
+                {% if page_obj.has_next %}		{# se tem uma proxima página, ao invés do número da página, vai colocar 'Próxima'. #}
                 <li>
                     <a href="?page={{ page_obj.next_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">Próxima</a>
                 </li>
