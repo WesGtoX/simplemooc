@@ -7,6 +7,7 @@ from taggit.managers import TaggableManager
 class Thread(models.Model):		# justamento o tópico do fórum.
 	
 	title = models.CharField('Título', max_length=100)		# título do tópico.
+	slug = models.SlugField('Identificador', max_length=100, unique=True)		# 'SlugField' por padrão cria com um index no banco de dados para indexar. A tendência é que seja único, mas ele não especifíca que tem que ser.
 	body = models.TextField('Mensagem')		# corpo da mensagem.
 	author = models.ForeignKey(
 		settings.AUTH_USER_MODEL, 		# tem que ser colocado dessa forma para que o Django fique compátivel, caso eu altere um modelo que é o usuário.
@@ -24,6 +25,10 @@ class Thread(models.Model):		# justamento o tópico do fórum.
 
 	def __str__(self):
 		return self.title
+
+	@models.permalink	# pega a tupla e usa uma função chamada reverse que está no pacote: "from django.core.urlresolvers import reverse", é uma forma de resgatar a url dado um nome. E com isso ele retonar a url.
+	def get_absolute_url(self):		# metodo que retorna uma tupla
+		return ('forum:thread',(), {'slug': self.slug})		# quando usa esse decorator, não precisa indicar o caminho da 'url'. Só precisa indicar uma tupla de três valores: 1º é o nome da 'url', 2º os parâmetros posicionais e o 3º é um dicionário com os parâmetros nomeados.
 
 
 	class Meta:

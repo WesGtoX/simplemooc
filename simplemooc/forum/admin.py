@@ -7,6 +7,7 @@ class ThreadAdmin(admin.ModelAdmin):
 
 	list_display = ['title', 'author', 'created', 'modified']
 	search_fields = ['title', 'author__email', 'body']
+	prepopulated_fields = {'slug': ('title',)}	# via javascript, preenche automaticamente com a devida formatação o campo 'slug'.
 
 
 class ReplyAdmin(admin.ModelAdmin):

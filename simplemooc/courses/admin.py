@@ -7,7 +7,7 @@ class CourseAdmin(admin.ModelAdmin):		# representa as opções do curso de uma f
 	
 	list_display = ['name', 'slug', 'start_date', 'created_at']		# o que será mostrado.
 	search_fields = ['name', 'slug']		# campo de busca.
-	prepopulated_fields = {'slug': ('name',)}	# preenche automaticamente com a devida formatação o campo 'slug'.
+	prepopulated_fields = {'slug': ('name',)}	# via javascript, preenche automaticamente com a devida formatação o campo 'slug'.
 
 
 class MaterialInlineAdmin(admin.StackedInline):		# 'InlineModelAdmin', pode ser escolhido duas formas de exibição 'StackedInline' (vertical) e o 'TabularInline' (horizontal).

@@ -7,6 +7,8 @@
             <li><a href="{% url 'core:home' %}">Início</a></li>
             <li>/</li>
             <li><a href="{% url 'forum:index' %}">Fórum de Discussões</a></li>
+            <li>/</li>
+            <li><a href="{{ object.get_absolute_url }}">{{ object }}</a></li>
         </ul>
     </div>
     <div class="pure-u-1-3">
@@ -36,7 +38,7 @@
                 <li class="pure-menu-heading">Tags</li>
                 <li>
                     {% for tag in tags %}
-                    <a href="#" class="tags">
+                    <a href="{% url 'forum:index_tagged' tag.slug %}" class="tags">
                         <i class="fa fa-tag"></i>
                         {{ tag }}
                     </a>
@@ -49,7 +51,7 @@
         <div class="inner">
             {% for thread in object_list %}		{# a 'ListView' vai nos fornecer um valor chamado 'object_list', que é justamente a lista de modelos, instâncias, que serve para a página atual, já que colocamos paginação, se não, seriam todos os objetos. #}
             <div class="well">
-                <h3><a href="" title="">{{ thread.title }}</a></h3>
+                <h3><a href="{{ thread.get_absolute_url }}" title="">{{ thread.title }}</a></h3>
                 <h5>
                     Criado por {{ thread.author }} | {{ thread.answers }} resposta{{ thread.answers|pluralize }} | {{ thread.views }} Visualizaç{{ thread.views|pluralize:"ão,ões" }} 
                 </h5>
@@ -59,7 +61,7 @@
                     {% for tag in thread.tags.all %}	{# lista todas as tags #}
                     <a href="" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}		{# 'forloop.last' ele não coloca ',' para o último. #}
                     {% endfor %}
-                    <a class="fright" href="" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
+                    <a class="fright" href="{{ thread.get_absolute_url }}" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
                 </p>
             </div>
             {% endfor %}

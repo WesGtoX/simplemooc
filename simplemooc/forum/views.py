@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, View, ListView
+from django.views.generic import (TemplateView, View, ListView, DetailView)
 
 from .models import Thread
 
@@ -27,6 +27,9 @@ class ForumView(ListView):
 			queryset = queryset.order_by('-views')
 		elif order == 'answers':
 			queryset =  queryset.order_by('-answers')
+		tag = self.kwargs.get('tag', '')	# a 'url' que acessar a view 'ForumView' ela é a url que tem o parâmetro nomeado.
+		if tag:
+			queryset = queryset.filter(tags__slug__icontains=tag)		# filtra as tags que o slug contém.
 		return queryset
 
 	def get_context_data(self, **kwargs):
@@ -35,7 +38,19 @@ class ForumView(ListView):
 	    return context
 
 
+class ThreadView(DetailView):
+
+	model = Thread
+	template_name = 'forum/thread.html'
+
+	def get_context_data(self, **kwargs):
+	    context = super(ThreadView, self).get_context_data(**kwargs)
+	    context['tags'] = Thread.tags.all()
+	    return context
+
+
 index = ForumView.as_view()		# 'index' recebe o resultado de 'ForumView.as_view()' o 'as_view' retorna uma função.
+thread = ThreadView.as_view()	# a variável 'thread' vai receber a 'ThreadView' que é uma classe, transformada em função. Uma função em 'view'.
 
 #index = TemplateView.as_view(template_name='forum/index.html')		# também poderia ter sido declarada dessa forma.
 
