@@ -67,8 +67,12 @@ class Reply(models.Model):
 
 
 def post_save_reply(created, instance, **kwargs):
-	instance.thread.answers = instance.thread.replies.count()
+	instance.thread.answers = instance.thread.replies.count()		# carrega a quantidade de resposta no tópico.
 	instance.thread.save()
+	if instance.correct:		# toda vez que salvo a resposta, ele verifica se a resposta é uma resposta correta.
+		instance.thread.replies.exclude(pk=instance.pk).update(		# ele pega a instancia, que é a resposta, pega a 'thread' em questão, busca todas as resposta...
+			correct=False		# ...e faz um filtro excluindo ela própria. Isso funciona porque o 'update' não chama o 'signal' tanto do 'post_save', quanto do 'pre_save'. O 'pre_save' e o 'post_save', são executados apenas no método '.save()', quando você executa de fato uma instância '.save()', o 'update' não dispara esse gatilho.
+		)
 
 def post_deleate_reply(instance, **kwargs):
 	instance.thread.answers = instance.thread.replies.count()

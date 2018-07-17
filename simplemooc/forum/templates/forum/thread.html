@@ -68,10 +68,23 @@
                 <a class="fright" href="#add_comment">Responder</a></h4>
                 {% for reply in object.replies.all %}       {# quando estiver com uma 'thread' em questão, eu posso chamar o atributo 'replies' e automaticamente eu vou chamar todos as respostas que estão associadas com a devida 'thread' #}
                 <hr />
-                {% filter linebreaks  %}
+                {#{% filter linebreaks  %}#}
+                <p>
                 <strong>{{ reply.author }}</strong> disse à {{ reply.created|timesince }} atrás:
-                {{ reply.reply}}
-                {% endfilter %}
+                <br />
+                {{ reply.reply|linebreaksbr }}
+                <br />
+                {% if reply.correct %}
+                    {% if reply.author == user %}       {# se for o autor da resposta, eu vou indicar que ele possa, cancelar a resposta, ou marcar como correta. #}
+                    <a href="{% url 'forum:reply_incorrect' reply.pk %}" title="" class="pure-button button-error">Cancelar Resposta Correta</a>
+                    {% endif %}
+                    <span class="fright label-success">resposta indicada pelo autor</span>
+                    <br />
+                {% elif reply.author == user %}
+                    <a href="{% url 'forum:reply_correct' reply.pk %}" title="" class="pure-button button-success">Resposta Correta</a>
+                {% endif %}
+                </p>
+                {#{% endfilter %}#}
                 {% endfor %}
                 <hr />
                 <form method="post" class="pure-form pure-form-stacked" id="add_comment">

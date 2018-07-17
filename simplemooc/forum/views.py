@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import (TemplateView, View, ListView, DetailView)
 from django.contrib import messages
 
-from .models import Thread
+from .models import Thread, Reply
 from .forms import ReplyForm
+
 
 #class ForumView(View):
 
@@ -15,6 +16,8 @@ from .forms import ReplyForm
 #class ForumView(TemplateView):
 
 #	#template_name = 'forum/index.html'
+
+
 class ForumView(ListView):
 
 	#model = Thread		# na listagem indicamos o model, mas podemos indicar a 'queryset'.
@@ -77,7 +80,22 @@ class ThreadView(DetailView):
 		return self.render_to_response(context)		# 'render_to_response' bem parecido com o render, a diferença é que só passa o contexto. O 'request' já está acessível através de 'self.request', e o template, é o 'template_name'.
 
 
+class ReplyCorrectView(View):
+
+	correct = True
+
+	def get(self, request, pk):
+		reply = get_object_or_404(Reply, pk=pk, author=request.user)
+		reply.correct = self.correct
+		reply.save()
+		messages.success(request, 'Resposta atualizada com sucesso')
+		return redirect(reply.thread.get_absolute_url())	# definimos no model de 'forum', o 'get_absolute_url' para a 'thread' em específico.
+
+
 index = ForumView.as_view()		# 'index' recebe o resultado de 'ForumView.as_view()' o 'as_view' retorna uma função.
 thread = ThreadView.as_view()	# a variável 'thread' vai receber a 'ThreadView' que é uma classe, transformada em função. Uma função em 'view'.
+reply_correct = ReplyCorrectView.as_view()
+reply_incorrect = ReplyCorrectView.as_view(correct=False)		# quando eu uso o 'as_view', eu posso passar parâmetros nomeados, eles vão virar os atributos dessa classe, vão substitruir valores.
+
 
 #index = TemplateView.as_view(template_name='forum/index.html')		# também poderia ter sido declarada dessa forma.
