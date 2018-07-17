@@ -45,6 +45,13 @@ class ThreadView(DetailView):
 	model = Thread
 	template_name = 'forum/thread.html'
 
+	def get(self, request, *args, **kwargs):
+		response = super(ThreadView, self).get(request, *args, **kwargs)		# quando chama o 'get' ele vai criar o 'self.object', que é justamente a 'thread' em questão.
+		if not self.request.user.is_authenticated or (self.object.author != self.request.user):		# se o usuário não estiver autenticado, ou ele estiver, mas não é o autor do tópico, então vai contar uma visualização.
+			self.object.views = self.object.views + 1
+			self.object.save()
+		return response
+
 	def get_context_data(self, **kwargs):
 	    context = super(ThreadView, self).get_context_data(**kwargs)		# implementa o 'get_context_data()' associado ao 'DetailView'.
 	    context['tags'] = Thread.tags.all()
@@ -53,7 +60,7 @@ class ThreadView(DetailView):
 	    															# mas ele ainda vai tentar validar esses dados, pois ele é um dicionário. Com essa lógica, eu indico, quando o 'POST' for vazio, eu não vou retornar o formulário 'POST' com um dicionário vazio,
 	    															# ele vai retonar a palavra 'None', e a implementação desse 'is_valid', ele verifica, quando for 'None', ou seja, eu não sobmeti o formulário, que só vai ser submetido quando de fato o método for o 'request.POST'.	    																
 
-	def post(self, request, *arg, **kwargs):		# cógdigo do 'get' que o 'DetailView' implementa. Esse método 'post', só é executado no método 'POST', ou seja, o método do 'POST' da função 'ThreadView' só vai ser ativado, quando eu acessar essa 'view' através do método 'POST'.
+	def post(self, request, *args, **kwargs):		# cógdigo do 'get' que o 'DetailView' implementa. Esse método 'post', só é executado no método 'POST', ou seja, o método do 'POST' da função 'ThreadView' só vai ser ativado, quando eu acessar essa 'view' através do método 'POST'.
 		if not self.request.user.is_authenticated:
 			messages.error(self.request, 'Para responder ao tópico é necessário estar logado')
 			return redirect(self.request.path)		# redireciona para a mesma url, objeto 'request' tem um atributo chamado 'path' que é justamanete a url atual.
@@ -74,4 +81,3 @@ index = ForumView.as_view()		# 'index' recebe o resultado de 'ForumView.as_view(
 thread = ThreadView.as_view()	# a variável 'thread' vai receber a 'ThreadView' que é uma classe, transformada em função. Uma função em 'view'.
 
 #index = TemplateView.as_view(template_name='forum/index.html')		# também poderia ter sido declarada dessa forma.
-

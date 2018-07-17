@@ -64,3 +64,31 @@ class Reply(models.Model):
 		verbose_name = 'Resposta'
 		verbose_name_plural = 'Respostas'
 		ordering = ['-correct', 'created']		# o valor booleano 'True' é maior que o 'False', então tem que ser ordenado de forma decrescente. E os outos ordena pela data.
+
+
+def post_save_reply(created, instance, **kwargs):
+	instance.thread.answers = instance.thread.replies.count()
+	instance.thread.save()
+
+def post_deleate_reply(instance, **kwargs):
+	instance.thread.answers = instance.thread.replies.count()
+	instance.thread.save()
+
+models.signals.post_save.connect(
+	post_save_reply, sender=Reply,		# é importante colocar o sender, porque só vai disparar quando for o model 'Reply', se não colocar o sender, ele vai disprar para qualquer model.
+	dispatch_uid='post_save_reply',		# por causa que as vezes o 'signal' pode ser carregado duas vezes caso esse arquivo seja importado mais de uma vez. E o 'dispatch_uid' é um verificador único
+)
+models.signals.post_delete.connect(
+	post_deleate_reply, sender=Reply, 
+	dispatch_uid='post_deleate_reply'
+)
+
+
+#def post_save_reply(created, instance, **kwargs):		# sistema de sinais que o Django criou e já implementou para os modelos, sempre que um modelo for atualizado, ele dispara um sinal, e você pode criar uma função e associar a esse sinal. Sempre colocar o '**kwargs' nessa função, porque esse 'post_save' recebe muitos parâmetros.
+#	if created:		# todas as vezes que eu criar uma resposta, eu aumento o número do atributo resposta da 'thread'.
+#		instance.thread.answers = instance.thread.answers + 1
+#		instance.thread.save()
+
+#def post_deleate_reply(instance, **kwargs):		# porque, toda vez que uma instancia for removida, uma reposta for removida, a ideia é que faça essa mesma lógica, só que ao contrário.
+#	instance.thread.answers = instance.thread.answers - 1
+#	instance.thread.save()
