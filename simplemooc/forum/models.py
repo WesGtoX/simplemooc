@@ -44,7 +44,7 @@ class Reply(models.Model):
 		related_name='replies',
 		on_delete = models.CASCADE		# 'on_delete' é obrigatório no Django 2.0
 	)
-	reply = models.TextField('Resposta', max_length=100)		# título do tópico.
+	reply = models.TextField('Resposta', max_length=500)		# título do tópico.
 	author = models.ForeignKey(
 		settings.AUTH_USER_MODEL, 		# tem que ser colocado dessa forma para que o Django fique compátivel, caso eu altere um modelo que é o usuário.
 		verbose_name='Autor', 

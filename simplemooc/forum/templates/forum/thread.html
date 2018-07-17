@@ -66,23 +66,24 @@
             <div class="well">
                 <h4 id="comments">Respostas
                 <a class="fright" href="#add_comment">Responder</a></h4>
+                {% for reply in object.replies.all %}       {# quando estiver com uma 'thread' em questão, eu posso chamar o atributo 'replies' e automaticamente eu vou chamar todos as respostas que estão associadas com a devida 'thread' #}
                 <hr />
-                <p>
-                    <strong>Fulano de Tal</strong> disse à 4 dias atrás:
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                </p>
+                {% filter linebreaks  %}
+                <strong>{{ reply.author }}</strong> disse à {{ reply.created|timesince }} atrás:
+                {{ reply.reply}}
+                {% endfilter %}
+                {% endfor %}
                 <hr />
-                <p>
-                    <strong>Fulano de Tal</strong> disse à 4 dias atrás:
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-                </p>
-                <hr>
                 <form method="post" class="pure-form pure-form-stacked" id="add_comment">
                     <fieldset>
-                        <div class="pure-control-group">
-                            <label for="password">Responder</label>
-                            <textarea name="reply" cols="40" rows="4"></textarea>
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="pure-control-group"> 
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {{ fiels.errors }}
                         </div>
+                        {% endfor %}
                         <div class="pure-controls">
                             <button type="submit" class="pure-button pure-button-primary">Enviar</button>
                         </div>
