@@ -1,6 +1,9 @@
+import json
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import (TemplateView, View, ListView, DetailView)
 from django.contrib import messages
+from django.http import HttpResponse
 
 from .models import Thread, Reply
 from .forms import ReplyForm
@@ -85,11 +88,16 @@ class ReplyCorrectView(View):
 	correct = True
 
 	def get(self, request, pk):
-		reply = get_object_or_404(Reply, pk=pk, author=request.user)
+		reply = get_object_or_404(Reply, pk=pk, thread__author=request.user)	# tente pegar a resposta que tem a chave, questão de segurança, pega apenas se for o autor da 'thread'. os dois undescore '__', vai tentar buscar um atributo do campo que é chave estrangeira do modelo atual.
 		reply.correct = self.correct
 		reply.save()
-		messages.success(request, 'Resposta atualizada com sucesso')
-		return redirect(reply.thread.get_absolute_url())	# definimos no model de 'forum', o 'get_absolute_url' para a 'thread' em específico.
+		message = 'Resposta atualizada com sucesso'
+		if request.is_ajax():		# essa request tem esse método, que pode verificar se a requisição é 'ajax'.
+			data = {'success': True, 'message': message}
+			return HttpResponse(json.dumps(data), content_type='application/json')		# não vai ser mais aquele html/plantext, ou algo desse tipo, vai ser 'application/json'. 'content_type' é importante para o 'browser' saber que tipo está retornando.
+		else:
+			messages.success(request, message)
+			return redirect(reply.thread.get_absolute_url())	# definimos no model de 'forum', o 'get_absolute_url' para a 'thread' em específico.
 
 
 index = ForumView.as_view()		# 'index' recebe o resultado de 'ForumView.as_view()' o 'as_view' retorna uma função.
