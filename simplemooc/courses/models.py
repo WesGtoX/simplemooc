@@ -45,7 +45,7 @@ class Course(models.Model):
 
 	def release_lessons(self):		# método que retorna todas as aulas disponíveis desse curso.
 		today = timezone.now().date()
-		return self.lessons.filter(release_date__gte=today)		# '__gte' slow caps da queryset, maior ou igual.
+		return self.lessons.filter(release_date__lte=today)		# '__gte' slow caps da queryset, maior ou igual. '__lte' slow caps da queryset, menor ou igual.
 
 	class Meta:		# uma versão mais bonita de falar essa classe.
 		verbose_name = 'Curso'

@@ -88,7 +88,7 @@ def show_announcement(request, slug, pk):
 	form = CommentForm(request.POST or None)
 	if form.is_valid():
 		comment = form.save(commit=False)	# cria e salva o comentário.
-		comment.user = request.user 	# usuário logao.
+		comment.user = request.user 	# usuário logado.
 		comment.announcement = announcement 	# o anúncio 'announcement = get_object_or_404(course.announcements.all(), pk=pk)'.
 		comment.save()		# depois chama o 'comment.save()' para de fato salvar o comentário.
 		form = CommentForm()	# apenas para zerar o formulário.
@@ -119,8 +119,8 @@ def lessons(request, slug):
 @enrollment_required
 def lesson(request, slug, pk):
 	course = request.course
-	lesson = get_object_or_404(Lesson, pk=pk, course=course)		# 'course=course' garantia de as aulas são mesmo desse curso.
-	if not request.user.is_staff and not lesson.is_available():		# verificação básica de segurança
+	lesson = get_object_or_404(Lesson, pk=pk, course=course)		# 'course=course' garantia de que as aulas são mesmo desse curso.
+	if not request.user.is_staff and not lesson.is_available():		# verificação básica de segurança.
 		messages.error(request, 'Esta aula não está disponível')
 		return redirect('courses:lessons', slug=course.slug)
 	template = 'courses/lesson.html'
@@ -136,7 +136,7 @@ def material(request, slug, pk):
 	course = request.course
 	material = get_object_or_404(Material, pk=pk, lesson__course=course)	# não tem relacionamento com o curso, mas tem relacionamento com a aula que tem relacionamento com o curso. Quando coloca '__' vou acessar uma propriedade já do outro objeto 'lesson__course'.
 	lesson = material.lesson
-	if not request.user.is_staff and not lesson.is_available():				# verificação básica de segurança
+	if not request.user.is_staff and not lesson.is_available():				# verificação básica de segurança.
 		messages.error(request, 'Este material não está disponível')
 		return redirect('courses:lesson', slug=course.slug, pk=lesson.pk)
 	if not material.is_embedded():		# verifica se o usuário é 'is_embedded', se não for ele redireciona para 'material.file.url', se for ele exibe realmente o template.
