@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% load courses_tags %}     {# carrega as tags presentes em 'courses_tags' o Django sabe que é uma template tag porque o arquivo está dentro de uma pasta chamada 'templatetags' que é o padrão. #}
+{% load courses_tags %}     {# carrega as 'tags' presentes em 'courses_tags' o Django sabe que é uma 'template tag' porque o arquivo está dentro de uma pasta chamada 'templatetags' que é o padrão. #}
 
 {% block content %}
 {% load_my_courses user as enrollments %}
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1">
         <ul class="breadcrumb">
-        	{% block breadcrumb %}		{# herança de herança, template que herda de outro template #}
+        	{% block breadcrumb %}		{# herança de herança, template que herda de outro template. #}
             <li><a href="{% url 'accounts:dashboard' %}">Meu Painel</a></li>
             {% endblock %}
         </ul>
@@ -54,7 +54,7 @@
             {% for enrollment in enrollments %}
             <div class="well">
                 <h3>{{ enrollment.course }}
-                ({{ enrollment.course.start_date|date:'d/m/Y'|default:'Sem data' }})   {# Filtro aninhado, filtro em cima de filtro #}
+                ({{ enrollment.course.start_date|date:'d/m/Y'|default:'Sem data' }})   {# filtro aninhado, filtro em cima de filtro. #}
                 </h3>
                 {{ enrollment.course.description|linebreaks }}
                 <div class="pure-controls">

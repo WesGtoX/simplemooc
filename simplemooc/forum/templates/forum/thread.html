@@ -66,7 +66,7 @@
             <div class="well" id="#div-comments">
                 <h4 id="comments">Respostas
                 <a class="fright" href="#add_comment">Responder</a></h4>
-                {% for reply in object.replies.all %}       {# quando estiver com uma 'thread' em questão, eu posso chamar o atributo 'replies' e automaticamente eu vou chamar todos as respostas que estão associadas com a devida 'thread' #}
+                {% for reply in object.replies.all %}       {# quando estiver com uma 'thread' em questão, eu posso chamar o atributo 'replies' e automaticamente eu vou chamar todos as respostas que estão associadas com a devida 'thread'. #}
                 <hr />
                 {#{% filter linebreaks  %}#}
                 <p>
@@ -77,9 +77,9 @@
                     {#{% if reply.correct %}#}
                     {% if object.author == user %}       {# verificar se é o autor do tópico. #}
                     {#{% if reply.author == user %}       {# se for o autor da resposta, eu vou indicar que ele possa, cancelar a resposta, ou marcar como correta. #}
-                    <a href="{% url 'forum:reply_incorrect' reply.pk %}" title="" class="pure-button button-error reply-cancel-correct-lnk{% if not reply.correct %} hidden{% endif %}">Cancelar Resposta Correta</a>    {# se a resposta não for correta, não aparecer o botão. #}
+                    <a href="{% url 'forum:reply_incorrect' reply.pk %}" title="" class="pure-button button-error reply-cancel-correct-lnk{% if not reply.correct %} hidden{% endif %}">Cancelar Resposta Correta</a>    {# se a resposta não for correta, não vai aparecer esse botão. #}
 
-                    <a href="{% url 'forum:reply_correct' reply.pk %}" title="" class="pure-button button-success reply-correct-lnk{% if reply.correct %} hidden{% endif %}">Resposta Correta</a>   {# se a resposta for correta, não aparecer esse botão, aparece o de cima. #}
+                    <a href="{% url 'forum:reply_correct' reply.pk %}" title="" class="pure-button button-success reply-correct-lnk{% if reply.correct %} hidden{% endif %}">Resposta Correta</a>   {# se a resposta for correta, não vai aparecer esse botão, aparece o de cima. #}
 
                     <span class="fright label-success reply-correct-msg{% if not reply.correct %} hidden{% endif %}">resposta indicada pelo autor</span>
                     {#{% endif %}#}
@@ -116,12 +116,12 @@
 
 {% block scripts %}
 <script type="text/javascript">
-    $(".reply-cancel-correct-lnk").on("click", function(e) {    //{# pega todos os elementos que tiver 'reply-cancel-correct-lnk' #}
+    $(".reply-cancel-correct-lnk").on("click", function(e) {    // pega todos os elementos que tiver 'reply-cancel-correct-lnk'.
         e.preventDefault();     // cancela o evento.
         var $this = $(this);    // cria o objeto 'json' com o 'this', só para poder facilitar a vida.
         var $p = $this.closest("p");     // pega o parágrafo que engloba a resposta.
         $.get($this.attr('href'), function(data) {      // faz a requisição via 'get ajax'.
-            if(data.success) {      // se os dados retornador forem um 'json' e forem 'sucesso', tiver a variável 'success == True'.
+            if(data.success) {      // se os dados retornados forem um 'json' e forem 'sucesso', tiver a variável 'success == True'.
                 $p.find(".reply-correct-msg").addClass('hidden');       // esconde a mensagem de 'reply-correct-msg'.
                 $this.addClass('hidden');       // esconde o botão de cancelar a resposta.
                 $p.find('.reply-correct-lnk').removeClass('hidden');        // e deixa o botão de indicar a resposta correta, deixa ele visível.
@@ -139,7 +139,7 @@
             if(data.success) {
                 $("#div-comments .reply-correct-msg").addClass('hidden');     // supondo que já tenha algumas respostas corretas antes, primeiro esconde todas.
                 $("#div-comments .reply-cancel-correct-lnk").addClass('hidden');     // se houver uma resposta correta antes, o 'reply-cancel-correct-lnk' estava visível, então adiciona o 'hidden' e ele não fica visível.
-                $("#div-comments .reply-correct-lnk").removeClass('hidden');     // se houver uma resposta antes, esse 'reply-correct-lnk' não estava visível, então agora remove a classe 'hidden', e ele fica vísivel.
+                $("#div-comments .reply-correct-lnk").removeClass('hidden');     // se houver uma resposta antes, esse 'reply-correct-lnk' não estava visível, então agora remove a classe 'hidden', e ele fica visível.
 
                 $p.find(".reply-correct-msg").removeClass('hidden');       // remove a classe 'hidden' da resposta atual. Para apenas ela ficar visível.
                 $this.addClass('hidden');       // adiciona a classe 'hidden' para esse elemento, que é o 'reply-correct-lnk'.

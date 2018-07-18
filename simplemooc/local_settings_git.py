@@ -8,7 +8,7 @@ TEMPLATE_DEBUG = True
 
 import os
 
-# ARMAZENA O DIRETORIO BASE DO PROJETO __file__ É REFERENCIA PARA O PRIMEIRO DIRETORIO simplomooc
+# ARMAZENA O DIRETORIO BASE DO PROJETO '__file__' É REFERENCIA PARA O PRIMEIRO DIRETÓRIO simplemooc.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DATABASES = {

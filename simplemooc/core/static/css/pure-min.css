@@ -935,3 +935,18 @@ table {
 .pure-table-horizontal tbody>tr:last-child td {
 	border-bottom-width:0
 }
+a.mylink-color {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+}
+a.mylink-color:visited {
+    color: #BDBDBD;
+    background-color: transparent;
+    text-decoration: none;
+}
+a.mylink-color:hover {
+    color: #BDBDBD;
+    background-color: transparent;
+    text-decoration: none;
+}

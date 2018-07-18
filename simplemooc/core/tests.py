@@ -7,7 +7,7 @@ class HomeViweTest(TestCase):		# teste da app 'core'.
 	
 	def test_home_status_code(self):
 		client = Client()		# inicializa o cliente.
-		response = client.get(reverse('core:home'))		# pega a resposta dele para um GET nessa página.
+		response = client.get(reverse('core:home'))		# pega a resposta dele para um 'GET' nessa página.
 		self.assertEqual(response.status_code, 200)		# 'assertEqual' assert's do 'TestCase'.
 
 	def test_home_template_used(self):

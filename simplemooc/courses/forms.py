@@ -16,34 +16,34 @@ class ContactCourse(forms.Form):
 	)
 
 	def send_mail(self, course):
-		subject = '[%s] Contato' % course	# course que está enviando o contato.
-		context = {		# forma nomeada, dicionário
+		subject = '[%s] Contato' % course	# 'course' que está enviando o contato.
+		context = {		# forma nomeada, dicionário.
 			'name': self.cleaned_data['name'],
 			'email': self.cleaned_data['email'],
 			'message': self.cleaned_data['message'],
 		}
 		template_name = 'courses/contact_email.html'
-		send_mail_template(	# chama função 'send_mail_template'
-			subject, # passa o assunto
-			template_name, # passa o nome do template
-			context, 	# recebe o contexto como parâmetro, que tem o 'nome', 'e-mail' e a 'mensagem'
-			[settings.CONTACT_EMAIL]	# lista com os e-mails que serão enviados
+		send_mail_template(	# chama função 'send_mail_template'.
+			subject, # passa o assunto.
+			template_name, # passa o nome do 'template'.
+			context, 	# recebe o contexto como parâmetro, que tem o 'nome', 'e-mail' e a 'mensagem'.
+			[settings.CONTACT_EMAIL]	# lista com os e-mails que serão enviados.
 		)
 
-    # Envio antigo, sem o uso de template
-    # def send_mail(self, course):
-    #     subject = '[%s] Contato' % course
-    #     message = 'Nome: %(name)s;E-mail: %(email)s;%(message)s'
-    #     context = {
-    #         'name': self.cleaned_data['name'],
-    #         'email': self.cleaned_data['email'],
-    #         'message': self.cleaned_data['message'],
-    #     }
-    #     message = message % context
-    #     send_mail(
-    #         subject, message, settings.DEFAULT_FROM_EMAIL,
-    #         [settings.CONTACT_EMAIL]
-    #     )
+    # Envio antigo, sem o uso de 'template'.
+#    def send_mail(self, course):
+#    	subject = '[%s] Contato' % course
+#        message = 'Nome: %(name)s;E-mail: %(email)s;%(message)s'
+#        context = {
+#            'name': self.cleaned_data['name'],
+#            'email': self.cleaned_data['email'],
+#            'message': self.cleaned_data['message'],
+#        }
+#        message = message % context
+#        send_mail(
+#            subject, message, settings.DEFAULT_FROM_EMAIL,
+#            [settings.CONTACT_EMAIL]
+#        )
 
 
 class CommentForm(forms.ModelForm):		# formulário para meu model.

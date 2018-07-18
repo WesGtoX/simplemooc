@@ -109,7 +109,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-
-simplemooc_old.tar.gz
-simplemooc.rar

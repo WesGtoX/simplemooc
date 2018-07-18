@@ -58,7 +58,7 @@
                 <p>
                     <i class="fa fa-tags"></i>
                     Tags: 
-                    {% for tag in thread.tags.all %}	{# lista todas as tags #}
+                    {% for tag in thread.tags.all %}	{# lista todas as 'tags'. #}
                     <a href="" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}		{# 'forloop.last' ele não coloca ',' para o último. #}
                     {% endfor %}
                     <a class="fright" href="{{ thread.get_absolute_url }}" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
@@ -76,7 +76,7 @@
                     <a href="?page={{ page }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">{{ page }}</a>
                 </li>
                 {% endfor %}
-                {% if page_obj.has_next %}		{# se tem uma proxima página, ao invés do número da página, vai colocar 'Próxima'. #}
+                {% if page_obj.has_next %}		{# se tem uma próxima página, ao invés do número da página, vai colocar 'Próxima'. #}
                 <li>
                     <a href="?page={{ page_obj.next_page_number }}{% if request.GET.order %}&order={{ request.GET.order }}{% endif %}" title="">Próxima</a>
                 </li>

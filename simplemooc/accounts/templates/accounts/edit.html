@@ -1,7 +1,7 @@
 {% extends "accounts/dashboard.html" %}
 
-{% block breadcrumb %}	{# chama o bloco da herança #}
-	{{ block.super }}	{# a variavel 'block' é o bloco que está utilizando a tag 'breadcrumb', ele tem um atributo chamado 'super', que chama o conteúdo que estava nele por padrão. #}
+{% block breadcrumb %}	{# chama o bloco da herança. #}
+	{{ block.super }}	{# a variável 'block' é o bloco que está utilizando a 'tag' 'breadcrumb', ele tem um atributo chamado 'super', que chama o conteúdo que estava nele por padrão. #}
 	<li>/</li>
 	<li><a href="{% url 'accounts:edit' %}">Editar Conta</a></li>
 {% endblock %}

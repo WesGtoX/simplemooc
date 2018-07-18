@@ -7,19 +7,19 @@ class CourseAdmin(admin.ModelAdmin):		# representa as opções do curso de uma f
 	
 	list_display = ['name', 'slug', 'start_date', 'created_at']		# o que será mostrado.
 	search_fields = ['name', 'slug']		# campo de busca.
-	prepopulated_fields = {'slug': ('name',)}	# via javascript, preenche automaticamente com a devida formatação o campo 'slug'.
+	prepopulated_fields = {'slug': ('name',)}	# via 'javascript', preenche automaticamente com a devida formatação o campo 'slug'.
 
 
 class MaterialInlineAdmin(admin.StackedInline):		# 'InlineModelAdmin', pode ser escolhido duas formas de exibição 'StackedInline' (vertical) e o 'TabularInline' (horizontal).
 
-	model = Material 		# model indicado que será tratado como 'InlineModelAdmin'.
+	model = Material 		# 'model' indicado que será tratado como 'InlineModelAdmin'.
 
 
 class LessonAdmin(admin.ModelAdmin):
 
 	list_display = ['name', 'number', 'course', 'release_date']		# o que será mostrado.
 	search_fields = ['name', 'description']		# campo de busca.
-	list_filter = ['created_at']		# filtragem lateral. Cria um campo de filtro lateral no admin.
+	list_filter = ['created_at']		# filtragem lateral. Cria um campo de filtro lateral no 'admin'.
 
 	inlines = [		# variável 'inlines' que é uma lista.
 		MaterialInlineAdmin

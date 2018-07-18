@@ -9,11 +9,11 @@
             <fieldset>
                 {{ form.non_field_errors }}      {# que são erros gerais, que não estão ligadas necessariamente a um campo, pode ser mais de um campo. #}
 
-                {% for field in form %}     {# para cada campo no formulário (o form é da view do Django). #}
+                {% for field in form %}     {# para cada campo no formulário (o 'form' é da 'view' do Django). #}
                 <div class="pure-control-group">
-                    {{ field.label_tag }}   {# view do Django. #}
-                    {{ field }}             {# view do Django. #}
-                    {{ field.errors }}      {# view do Django. #}
+                    {{ field.label_tag }}   {# 'view' do Django. #}
+                    {{ field }}             {# 'view' do Django. #}
+                    {{ field.errors }}      {# 'view' do Django. #}
                 </div>
                 {% endfor %}
 

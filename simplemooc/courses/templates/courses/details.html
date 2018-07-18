@@ -48,16 +48,16 @@
         <p>Você enviou o formulário com sucesso</p>
         {% endif %}
         <form action="#contato" class="pure-form pure-form-aligned" method="post">
-            {% csrf_token %}    {# Todo post que for para os ervidor Django, ele válida para saber se realmente o usuário é confiável, e não um post de outro lugar. #}
+            {% csrf_token %}    {# todo 'post' que for para o servidor Django, ele válida para saber se realmente o usuário é confiável, e não um post de outro lugar. #}
             <fieldset>
-                {% for field in form %}     {# para cada campo do formulário. #}
+                {% for field in form %}     {# para cada campo do formulário... #}
                 <div class="pure-control-group">
-                    {{ field.label_tag }}   {# renderize a tag do label. #}
+                    {{ field.label_tag }}   {# renderize a tag do label... #}
                     {{ field }}     {# renderize o campo #}
-                    {% if field.errors %}   {# se tiver erro. #}
+                    {% if field.errors %}   {# se tiver erro... #}
                     <ul class="errorlist">
-                        {% for error in field.errors %}     {# para cada erro. #}
-                        <li>{{ error }}</li>    {# imprimir o erro. #}
+                        {% for error in field.errors %}     {# para cada erro... #}
+                        <li>{{ error }}</li>    {# imprime o erro. #}
                         {% endfor %}
                     </ul>
                     {% endif %}

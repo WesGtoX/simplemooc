@@ -15,7 +15,7 @@
         <h4 id="comments">Comentários
         <a class="fright" href="#add_comment">Comentar</a></h4>
         <hr />
-        {% for comment in announcement.comments.all %}  {# para cada comentario no anúncio, esse 'comments' é a 'related_name' no 'models' #}
+        {% for comment in announcement.comments.all %}  {# para cada comentário no anúncio, esse 'comments' é a 'related_name' no 'models'. #}
         <p>
             <strong>{{ comment.user }}</strong> disse à {{ comment.created_at|timesince }} atrás: <br />
             {{ comment.comment|linebreaksbr }}

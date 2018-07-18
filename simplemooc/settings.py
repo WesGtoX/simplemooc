@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
-# ARMAZENA O DIRETORIO BASE DO PROJETO __file__ É REFERENCIA PARA O PRIMEIRO DIRETORIO simplomooc
+# ARMAZENA O DIRETORIO BASE DO PROJETO '__file__' É REFERENCIA PARA O PRIMEIRO DIRETÓRIO simplemooc.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -43,10 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    #libs
+    # libs.
     'taggit',
     #apps
-    # path da aplicação (movendo o app para pasta simplemooc, pode ser referenciada dessa maneira).
+    # 'path' da aplicação (movendo o 'app' para pasta 'simplemooc', pode ser referenciada dessa maneira).
     'simplemooc.core',
     'simplemooc.accounts',
     'simplemooc.courses',
@@ -136,7 +136,7 @@ USE_TZ = True
 #STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')      # os arquivos relacionados a modelo, serão salvos nesse diretório.
-MEDIA_URL = '/media/'    # seria a url base para os arquivos estáticos que são feitos uploads pelo usuário.
+MEDIA_URL = '/media/'    # seria a 'url' base para os arquivos estáticos que são feitos uploads pelo usuário.
 
 # E-mails
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # settings padrão (pode ser retirada)
@@ -150,10 +150,10 @@ DEFAULT_FROM_EMAIL = 'Nome <email@gmail.com>'
 
 CONTACT_EMAIL = 'contato@simplemooc.com'
 
-# Auth - redireciona para uma determinada url definida quando efetua o login
-LOGIN_URL = 'accounts:login'        # pode ser definida manualmente, ou usar o 'accounts' já utilizado no template
-LOGIN_REDIRECT_URL = 'core:home'    # redireciona para a home
-LOGOUT_URL = 'accounts:logout'      # url de logout
+# 'Auth' - redireciona para uma determinada 'url' definida quando efetua o login.
+LOGIN_URL = 'accounts:login'        # pode ser definida manualmente, ou usar o 'accounts' já utilizado no template.
+LOGIN_REDIRECT_URL = 'core:home'    # redireciona para a home.
+LOGOUT_URL = 'accounts:logout'      # url de logout.
 AUTH_USER_MODEL = 'accounts.User'   # setar o nome da 'app'.'model', com isso o Django vai saber que o usuário do sistema é o nosso model e não o padrão do Django.
 
 
