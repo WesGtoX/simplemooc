@@ -24,7 +24,7 @@ from .forms import ReplyForm
 class ForumView(ListView):
 
 	#model = Thread		# na listagem indicamos o 'model', mas podemos indicar a 'queryset'.
-	paginate_by = 2
+	paginate_by = 10
 	template_name='forum/index.html'
 
 	def get_queryset(self):		# uma das opções de customização do 'ListView'.
