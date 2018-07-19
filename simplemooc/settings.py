@@ -135,8 +135,8 @@ USE_TZ = True
 
 #STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')      # os arquivos relacionados a modelo, serão salvos nesse diretório.
-MEDIA_URL = '/media/'    # seria a 'url' base para os arquivos estáticos que são feitos uploads pelo usuário.
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')      # os arquivos relacionados a modelo, serão salvos nesse diretório.
+#MEDIA_URL = '/media/'    # seria a 'url' base para os arquivos estáticos que são feitos uploads pelo usuário.
 
 # E-mails
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # settings padrão (pode ser retirada)
@@ -177,21 +177,26 @@ ALLOWED_HOSTS = ['*']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
-#STATICFILES_DIRS = [
-#    os.path.join(PROJECT_ROOT, 'static'),
-#]
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
-import django_heroku
-django_heroku.settings(locals())
+#import django_heroku
+#django_heroku.settings(locals())
 
 try:
     from simplemooc.local_settings import *
