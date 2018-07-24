@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
+    #'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     # libs.
     'taggit',
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -194,8 +194,6 @@ STATIC_URL = '/static/'
 #import django_heroku
 #django_heroku.settings(locals())
 
-
-# AWS S3 SETTINGS
 
 AWS_STORAGE_BUCKET_NAME = os.environ['s3_bucket_name']
 AWS_S3_REGION_NAME = os.environ['s3_region_name']
