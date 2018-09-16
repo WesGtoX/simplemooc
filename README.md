@@ -1,14 +1,4 @@
-<!--
-![](src/logo.png)
-<p align="center">
-   <a href="https://github.com/WesGtoX/simplomooc">
-     <img src="**IMG**.png" alt="Simplomooc" title="Simplomooc" width="500">
-   </a>
-</p>
-
------------------
--->
-# Simplomooc
+# Simplemooc
 
 Simple MOOC is a simple distance learning platform for MOOC (Massive Open Online Course) courses. 
 The "Simple" is related to the simplicity and minimalistic of the design and the objectivity of its functionalities.
