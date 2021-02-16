@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from django.urls import reverse
 
 from simplemooc.core.mail import send_mail_template
 
@@ -53,7 +54,7 @@ class Course(models.Model):
     # Pega a 'tupla' e usa uma função chamada 'reverse' que está no
     # pacote: "from django.core.urlresolvers import reverse", é uma forma
     # de resgatar a 'url' dado um nome. E com isso ele retonar a 'url'.
-    @models.permalink
+    # @models.permalink  # deprecated
     def get_absolute_url(self):
         """
         Método que retorna uma tupla.
@@ -62,7 +63,8 @@ class Course(models.Model):
         - 2º parâmetro: argumentos não nomeáveis (não estamos utilizando).
         - 3º parâmetro: argumentos nomeáveis que é um dicionário (estamos utilizando).
         """
-        return 'courses:details', (), {'slug': self.slug}
+        # return 'courses:details', (), {'slug': self.slug}  # deprecated
+        return reverse('courses:details', kwargs={'slug': self.slug})
 
     def release_lessons(self):
         """

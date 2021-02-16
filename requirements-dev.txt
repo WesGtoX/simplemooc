@@ -1,14 +1,14 @@
 -r requirements.txt
-codecov==2.1.10
-coverage==5.3
+codecov==2.1.11
+coverage==5.4
 factory-boy==3.2.0
-Faker==5.3.0
+Faker==6.1.1
 flake8==3.8.4
-mock==2.0.0
-model-mommy==1.6.0
-mypy==0.790
-pudb==2019.2
+mock==4.0.3
+model-mommy==2.0.0
+mypy==0.800
+pudb==2020.1
 pytest-django==4.1.0
 pytest-flake8==1.0.7
 pytest-pythonpath==0.7.3
-pytest==6.1.2
+pytest==6.2.2

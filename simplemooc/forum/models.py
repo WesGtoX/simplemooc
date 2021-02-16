@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 from taggit.managers import TaggableManager
 
@@ -47,7 +48,7 @@ class Thread(models.Model):
     # Pega a 'tupla' e usa uma função chamada 'reverse' que está no
     # pacote: "from django.core.urlresolvers import reverse",
     # é uma forma de resgatar a 'url' dado um nome. E com isso ele retonar a 'url'.
-    @models.permalink
+    # @models.permalink  # deprecated
     def get_absolute_url(self):
         """
         'método' que retorna uma 'tupla'
@@ -58,7 +59,8 @@ class Thread(models.Model):
             - 2º os parâmetros posicionais e o
             - 3º é um dicionário com os parâmetros nomeados.
         """
-        return 'forum:thread', (), {'slug': self.slug}
+        # return 'forum:thread', (), {'slug': self.slug}  # deprecated
+        return reverse('forum:thread', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Tópico'
