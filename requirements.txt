@@ -13,7 +13,7 @@ docutils==0.14
 gunicorn==19.9.0
 jmespath==0.9.3
 pbr==4.1.0
-Pillow==5.2.0
+Pillow==7.1.0
 pipenv==2018.7.1
 psycopg2-binary==2.8.5
 python-dateutil==2.7.3
