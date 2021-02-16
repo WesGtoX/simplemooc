@@ -1,14 +1,14 @@
 # LOCAL SETTINGS
-# CHANGE DE NAME TO 'local_settings.py'
+# CHANGE THE NAME TO 'local_settings.py'
+import os
 
 
 DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-import os
 
-# ARMAZENA O DIRETORIO BASE DO PROJETO '__file__' É REFERENCIA PARA O PRIMEIRO DIRETÓRIO simplemooc.
+# Armazena o diretorio base do projeto '__file__' é referencia para o primeiro diretório simplemooc.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 DATABASES = {
