@@ -13,7 +13,7 @@ urlpatterns = [
     # Ao invés de criar minha própria 'view', estou colocando uma 'view' direto do Django.
     # 3ª Parâmetro que é um dicionário, serve para parâmetros nomeados,
     # que serão passados para essa 'view'. Faz a substituição na 'view'.
-    path('entrar/', LoginView.as_view(template_name= 'accounts/login.html'), name='login'),
+    path('entrar/', LoginView.as_view(template_name='accounts/login.html'), name='login'),
 
     # Vai ser redirecionado para a 'view' 'home', da 'app' 'core'.
     path('sair/', LogoutView.as_view(next_page='core:home'), name='logout'),
