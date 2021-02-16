@@ -1,29 +1,48 @@
 from django.contrib import admin
-
-from .models import (Course, Enrollment, Announcement, Comment, Lesson, Material)
-
-
-class CourseAdmin(admin.ModelAdmin):		# representa as opções do curso de uma forma melhor, com mais opções.
-	
-	list_display = ['name', 'slug', 'start_date', 'created_at']		# o que será mostrado.
-	search_fields = ['name', 'slug']		# campo de busca.
-	prepopulated_fields = {'slug': ('name',)}	# via 'javascript', preenche automaticamente com a devida formatação o campo 'slug'.
+from simplemooc.courses.models import (
+    Course, Enrollment, Announcement,
+    Comment, Lesson, Material
+)
 
 
-class MaterialInlineAdmin(admin.StackedInline):		# 'InlineModelAdmin', pode ser escolhido duas formas de exibição 'StackedInline' (vertical) e o 'TabularInline' (horizontal).
+class CourseAdmin(admin.ModelAdmin):
+    """
+    Representa as opções do curso de uma forma melhor, com mais opções.
+    """
 
-	model = Material 		# 'model' indicado que será tratado como 'InlineModelAdmin'.
+    # O que será mostrado.
+    list_display = ['name', 'slug', 'start_date', 'created_at']
+    # Campo de busca.
+    search_fields = ['name', 'slug']
+    # Via 'javascript', preenche automaticamente com a devida formatação o campo 'slug'.
+    prepopulated_fields = {'slug': ('name',)}
+
+
+class MaterialInlineAdmin(admin.StackedInline):
+    """
+    'InlineModelAdmin', pode ser escolhido duas formas de exibição:
+    'StackedInline' (vertical)
+    'TabularInline' (horizontal)
+
+    'model' indicado que será tratado como 'InlineModelAdmin'
+    """
+
+    model = Material
 
 
 class LessonAdmin(admin.ModelAdmin):
+    # O que será mostrado.
+    list_display = ['name', 'number', 'course', 'release_date']
 
-	list_display = ['name', 'number', 'course', 'release_date']		# o que será mostrado.
-	search_fields = ['name', 'description']		# campo de busca.
-	list_filter = ['created_at']		# filtragem lateral. Cria um campo de filtro lateral no 'admin'.
+    # Campo de busca.
+    search_fields = ['name', 'description']
 
-	inlines = [		# variável 'inlines' que é uma lista.
-		MaterialInlineAdmin
-	]
+    # Filtragem lateral. Cria um campo de filtro lateral no 'admin'.
+    list_filter = ['created_at']
+
+    # Variável 'inlines' que é uma lista.
+    inlines = [MaterialInlineAdmin]
+
 
 admin.site.register(Course, CourseAdmin)
 admin.site.register([Enrollment, Announcement, Comment, Material])
