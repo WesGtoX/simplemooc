@@ -1,11 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+
 
 def home(request):
-	return render(request, 'home.html')
-	# 1º parâmetro é o 'request'.
-	# 2º parâmetro 'home.html', é o nome do template.
-	# 3º parâmetro passei um dicionário que são as variaveis que ficaram disponiveis no template.
+    """
+    1º parâmetro é o 'request'.
+    2º parâmetro 'home.html', é o nome do template.
+    3º parâmetro passei um dicionário que são as variaveis que ficaram disponiveis no template.
+    """
+    return render(request, 'home.html')
+
 
 def contact(request):
-	return render(request, 'contact.html')
+    return render(request, 'contact.html')
