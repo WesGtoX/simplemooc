@@ -1,4 +1,4 @@
-name: Navedex-API CI
+name: Simplemooc CI
 
 on:
   push:

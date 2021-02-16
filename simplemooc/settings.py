@@ -7,7 +7,7 @@ from decouple import config
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY', default='ARANDOMSECRETKEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
@@ -133,12 +133,12 @@ if ADMINS_EMAIL is not None:
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # settings padrão (pode ser retirada)
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST', default=None)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default=None)
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default=None)
-EMAIL_PORT = config('EMAIL_PORT', default=None)
-EMAIL_FROM_NAME = config('EMAIL_FROM_NAME', default=None)
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True)
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_PORT = config('EMAIL_PORT', default=25, cast=int)
+EMAIL_FROM_NAME = config('EMAIL_FROM_NAME', default='Simplemooc')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
 DEFAULT_FROM_EMAIL = f'{EMAIL_FROM_NAME} <{EMAIL_HOST_USER}>'
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_SUBJECT_PREFIX = '[Simplemooc] '
