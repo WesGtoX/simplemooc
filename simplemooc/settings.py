@@ -13,7 +13,13 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 TEMPLATE_DEBUG = config('TEMPLATE_DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'simplemooc-wes.herokuapp.com',
+    'simplemooc.wesleymendes.com.br',
+    'www.simplemooc.wesleymendes.com.br'
+]
 
 
 # Application definition
