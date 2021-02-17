@@ -18,7 +18,9 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'simplemooc-wes.herokuapp.com',
     'simplemooc.wesleymendes.com.br',
-    'www.simplemooc.wesleymendes.com.br'
+    'www.simplemooc.wesleymendes.com.br',
+    'simplemooc.wesleymends.com.br',
+    'www.simplemooc.wesleymends.com.br'
 ]
 
 
