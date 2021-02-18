@@ -1,0 +1,5 @@
+Um novo usuário foi cadastrado com sucesso!
+
+Nome: {{ name }}
+Username: {{ username }}
+E-mail: {{ email }}

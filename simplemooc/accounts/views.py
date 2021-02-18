@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 # from django.conf import settings
+from django.core.mail import mail_admins
+from django.template.loader import render_to_string
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, get_user_model
@@ -27,6 +29,24 @@ def dashboard(request):
     return render(request, template_name, context)
 
 
+def admin_mail_send(user):
+    data = {
+        'name': user.name,
+        'username': user.username,
+        'email': user.email
+    }
+
+    plain_text = render_to_string('accounts/emails/new_user.txt', data)
+    html_email = render_to_string('accounts/emails/new_user.html', data)
+
+    mail_admins(
+        subject='Novo usuário cadastrado',
+        message=plain_text,
+        html_message=html_email,
+        fail_silently=False
+    )
+
+
 def register(request):
     template_name = 'accounts/register.html'
     # Verifica se o método é 'post'...
@@ -44,6 +64,9 @@ def register(request):
 
             # É responsável por logar de fato o usuário, coloca o usuário na sessão.
             login(request, user)
+
+            # enviar email de criação de usuário para os admins
+            admin_mail_send(user=user)
 
             # Depois faz o 'redirect' para a 'home'.
             return redirect('core:home')
